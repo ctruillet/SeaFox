@@ -1,10 +1,12 @@
+package eu.ctruillet.upssitech.sri.tp5;
+
 import processing.core.PApplet;
 
 public class MainClass extends PApplet {
 	public static PApplet processing;
 
 	public static void main(String[] args) {
-		PApplet.main("MainClass", args);
+		PApplet.main("eu.ctruillet.upssitech.sri.tp5.MainClass", args);
 	}
 
 	public void setup(){
