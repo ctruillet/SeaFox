@@ -1,23 +1,32 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 
 public class Jeu {
 	//Attribut
+	private PApplet sketch;
 	private Plateau plateau;
 	private ArrayList<Joueur> listeJoueur;
 	private boolean fini;
 
 	//Constructeur
-	public Jeu(int taille){
-		this.plateau = new Plateau(taille);
+	public Jeu(PApplet sketch, int taille){
+		this.sketch = sketch;
+		this.plateau = new Plateau(this.sketch, taille);
 		this.listeJoueur = new ArrayList<Joueur>();
 		this.fini = false;
 	}
 
 	//Méthodes
 	public void jouer(){
+		this.plateau.affichage();
 		//ToDO
+	}
+
+	public void draw(){
+		this.plateau.draw(10,10);
 	}
 
 	public void choixJoueurs(){

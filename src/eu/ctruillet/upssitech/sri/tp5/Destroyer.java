@@ -6,6 +6,7 @@ public class Destroyer extends Navire {
 	//Constructeur
 	public Destroyer(int i, int n){
 		super(i, TypeNav.DESTROYER, n);
+		this.etat = 2;
 	}
 
 	//Méthodes

@@ -8,7 +8,7 @@ public abstract class Navire {
 	protected TypeNav myType;
 	protected String strAffichage;
 	protected int numEq;
-	protected int etat;
+	protected int etat; // 0 = Coule
 	protected int portee;
 	protected int vitesse;
 	protected Point position;
@@ -45,13 +45,11 @@ public abstract class Navire {
 	}
 
 	public boolean estValide(){
-		//ToDo
-		return true;
+		return this.etat!=0;
 	}
 
 	public boolean estCoule(){
-		//ToDo
-		return true;
+		return this.etat==0;
 	}
 	public void seDeplacer(Point p){
 		//ToDo
@@ -66,8 +64,7 @@ public abstract class Navire {
 	}
 
 	public String toString(){
-		//ToDo
-		return "";
+		return (this.id+";"+this.position+";"+this.numEq+";"+this.myType);
 	}
 
 	public int getVitesse(){

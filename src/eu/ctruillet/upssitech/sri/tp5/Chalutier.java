@@ -6,6 +6,8 @@ public class Chalutier extends Navire{
 	//Constructeur
 	public Chalutier(int i, int n){
 		super(i, TypeNav.CHALUTIER, n);
+		this.etat = 3;
+		this.portee = 1;
 	}
 	//Méthodes
 	public String toString(){

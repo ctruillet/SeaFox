@@ -1,14 +1,17 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 
 public class CasePlateau {
 	//Attributs
-	private ArrayList<Navire> occupants;
-
+	private ArrayList<Navire> occupants = new ArrayList<Navire>();
+	private PApplet sketch;
 
 	//Constructeur
-	public CasePlateau(){
+	public CasePlateau(PApplet sketch){
+		this.sketch = sketch;
 		//ToDo
 	}
 
@@ -18,6 +21,7 @@ public class CasePlateau {
 	}
 
 	public void addOccupant(Navire occupant){
+		//ToDo
 		this.occupants.add(occupant);
 	}
 
@@ -40,12 +44,20 @@ public class CasePlateau {
 	}
 
 	public String affichage(){
-		//ToDo
-		return "";
+		String s = "[";
+		for (Navire e : this.occupants){
+			s+=e.toString() + ";";
+		}
+		return s + "]";
 	}
 
 	public void removeOccupant(Navire n){
 		this.occupants.remove(n);
+	}
+
+	public void draw (int x, int y){
+		System.out.println("Debut dessin à"+x+";"+y+"\n");
+		sketch.square(x,y,10);
 	}
 
 

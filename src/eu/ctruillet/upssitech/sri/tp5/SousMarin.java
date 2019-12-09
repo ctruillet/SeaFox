@@ -6,6 +6,7 @@ public class SousMarin extends Navire {
 	//Constructeur
 	public SousMarin(int i, int n){
 		super(i, TypeNav.SOUSMARIN, n);
+		this.etat = 1;
 	}
 
 	//Méthodes
