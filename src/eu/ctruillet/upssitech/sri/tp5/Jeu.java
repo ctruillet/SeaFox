@@ -79,8 +79,18 @@ public class Jeu {
 		Equipe e = new Equipe(this.sketch,n);
 		Navire nav = new SousMarin(sketch,0,0);
 		e.addNavire(nav);
+		this.plateau.getCaseAt(3,0).addOccupant(nav);
+
+		nav = new Destroyer(sketch,1,2);
+		e.addNavire(nav);
+		this.plateau.getCaseAt(3,1).addOccupant(nav);
+
+		nav = new Chalutier(sketch,1,3);
+		e.addNavire(nav);
+		this.plateau.getCaseAt(5,3).addOccupant(nav);
+
 		this.listeJoueur.add(e);
-		this.plateau.getCaseAt(3,2).addOccupant(nav);
+
 
 	}
 

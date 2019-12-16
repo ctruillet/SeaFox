@@ -42,8 +42,7 @@ public class CasePlateau {
 	}
 
 	public boolean estPleine(){
-		//ToDo
-		return true;
+		return this.occupants.size() == 2;
 	}
 
 	public String affichage(){
@@ -62,12 +61,27 @@ public class CasePlateau {
 		sketch.stroke(181,128,87);
 		sketch.square(x,y,this.tailleCase);
 		for(Navire n : this.getOccupants()){
+			PImage img = sketch.loadImage("../doc/default.png");
 			if(n.getType() == TypeNav.SOUSMARIN){
-				PImage img = sketch.loadImage("../doc/sousmarin.png");
-				sketch.tint((n.getNumEq() == 0 ? 255 : (n.getNumEq() == 3 ? 255 : 0)),(n.getNumEq() == 1 ? 255 : (n.getNumEq() == 3 ? 255 : 0)),(n.getNumEq() == 2 ? 200 : 0));
-				sketch.image(img,x,y);
-				sketch.noTint();
+				img = sketch.loadImage("../doc/sousmarin.png");
 			}
+			if(n.getType() == TypeNav.DESTROYER){
+				img = sketch.loadImage("../doc/destroyer.png");
+			}
+			if(n.getType() == TypeNav.CHALUTIER){
+				img = sketch.loadImage("../doc/chalutier.png");
+			}
+
+			//Teinte de couleur suivant l'équipe
+			/*
+			 * ROUGE : 0
+			 * VERT  : 1
+			 * BLEU  : 2
+			 * JAUNE : 3
+			 */
+			sketch.tint((n.getNumEq() == 0 ? 255 : (n.getNumEq() == 3 ? 255 : 0)),(n.getNumEq() == 1 ? 255 : (n.getNumEq() == 3 ? 255 : (n.getNumEq() == 2 ? 100 : 0))),(n.getNumEq() == 2 ? 225 : 0));
+			sketch.image(img,x,y);
+			sketch.noTint();
 		}
 	}
 
