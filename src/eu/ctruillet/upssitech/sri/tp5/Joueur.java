@@ -1,5 +1,7 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 
 public interface Joueur {

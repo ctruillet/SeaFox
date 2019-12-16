@@ -1,8 +1,10 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 public class EqBataillon extends Equipe {
-	public EqBataillon(int idEq, Nature n){
-		super(n);
+	public EqBataillon(PApplet sketch, int idEq, Nature n){
+		super(sketch, n);
 		this.id=idEq;
 	}
 }

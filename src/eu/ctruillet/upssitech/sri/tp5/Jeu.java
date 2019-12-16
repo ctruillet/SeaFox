@@ -75,4 +75,13 @@ public class Jeu {
 		return this.plateau;
 	}
 
+	public void addNewJoueur(Nature n){
+		Equipe e = new Equipe(this.sketch,n);
+		Navire nav = new SousMarin(sketch,0,0);
+		e.addNavire(nav);
+		this.listeJoueur.add(e);
+		this.plateau.getCaseAt(3,2).addOccupant(nav);
+
+	}
+
 }

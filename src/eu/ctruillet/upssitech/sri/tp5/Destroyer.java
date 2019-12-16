@@ -1,11 +1,13 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 public class Destroyer extends Navire {
 	//Attributs
 
 	//Constructeur
-	public Destroyer(int i, int n){
-		super(i, TypeNav.DESTROYER, n);
+	public Destroyer(PApplet sketch, int i, int n){
+		super(sketch, i, TypeNav.DESTROYER, n);
 		this.etat = 2;
 	}
 

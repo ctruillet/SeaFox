@@ -16,6 +16,7 @@ public class MainClass extends PApplet {
 	public void setup(){
 		processing = this;
 		this.j = new Jeu(this, 10);
+		j.addNewJoueur(Nature.HUMAIN);
 	}
 
 	public void settings(){

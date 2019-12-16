@@ -15,7 +15,6 @@ public class Plateau {
 		this.sketch = sketch;
 		this.taille = taille;
 		this.tailleCase = (650 - 30)/taille;
-		System.out.println(tailleCase);
 		this.matrice = new CasePlateau[this.taille][this.taille];
 		for(int i=0; i<this.taille; i++){
 			for(int j=0; j<this.taille; j++){

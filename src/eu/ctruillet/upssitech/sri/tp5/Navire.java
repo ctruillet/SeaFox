@@ -1,9 +1,13 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.awt.*;
 
 public abstract class Navire {
 	//Attributs
+	private PApplet sketch;
 	protected int id;
 	protected TypeNav myType;
 	protected String strAffichage;
@@ -14,7 +18,8 @@ public abstract class Navire {
 	protected Point position;
 
 	//Constructeur
-	public Navire(int i, TypeNav t, int n){
+	public Navire(PApplet sketch, int i, TypeNav t, int n){
+		this.sketch = sketch;
 		this.id = i;
 		this.myType = t;
 		this.numEq = n;

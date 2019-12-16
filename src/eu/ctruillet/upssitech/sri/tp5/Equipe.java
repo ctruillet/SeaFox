@@ -1,18 +1,22 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 
 public class Equipe implements JHumain,JIA {
 	//Attributs
 	protected Statut myStatut;
+	private PApplet sketch;
 	protected Nature myNature;
 	protected int id;
 	protected Commande myCommande;
-	protected ArrayList<Navire> listeNavire;
+	protected ArrayList<Navire> listeNavire = new ArrayList<Navire>();
 
 	//Constructeur
-	public Equipe(Nature n){
-		this.myNature=n;
+	public Equipe(PApplet sketch, Nature n){
+		this.sketch = sketch;
+		this.myNature = n;
 	}
 
 	//Méthodes

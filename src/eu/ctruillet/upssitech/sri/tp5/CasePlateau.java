@@ -1,6 +1,7 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,14 @@ public class CasePlateau {
 	public void draw (int x, int y){
 		sketch.stroke(181,128,87);
 		sketch.square(x,y,this.tailleCase);
+		for(Navire n : this.getOccupants()){
+			if(n.getType() == TypeNav.SOUSMARIN){
+				PImage img = sketch.loadImage("../doc/sousmarin.png");
+				sketch.tint((n.getNumEq() == 0 ? 255 : (n.getNumEq() == 3 ? 255 : 0)),(n.getNumEq() == 1 ? 255 : (n.getNumEq() == 3 ? 255 : 0)),(n.getNumEq() == 2 ? 200 : 0));
+				sketch.image(img,x,y);
+				sketch.noTint();
+			}
+		}
 	}
 
 
