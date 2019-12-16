@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class CasePlateau {
 	//Attributs
 	private ArrayList<Navire> occupants = new ArrayList<Navire>();
+	private int tailleCase;
 	private PApplet sketch;
 
 	//Constructeur
-	public CasePlateau(PApplet sketch){
+	public CasePlateau(PApplet sketch, int tailleCase){
+		this.tailleCase = tailleCase;
 		this.sketch = sketch;
 		//ToDo
 	}
@@ -56,9 +58,11 @@ public class CasePlateau {
 	}
 
 	public void draw (int x, int y){
-		System.out.println("Debut dessin à"+x+";"+y+"\n");
-		sketch.square(x,y,10);
+		sketch.stroke(181,128,87);
+		sketch.square(x,y,this.tailleCase);
 	}
+
+
 
 
 }

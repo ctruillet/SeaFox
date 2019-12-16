@@ -26,7 +26,7 @@ public class Jeu {
 	}
 
 	public void draw(){
-		this.plateau.draw(10,10);
+		this.plateau.draw(15,15);
 	}
 
 	public void choixJoueurs(){
@@ -69,6 +69,10 @@ public class Jeu {
 
 	public static void main(String[] args) {
 
+	}
+
+	public Plateau getPlateau(){
+		return this.plateau;
 	}
 
 }
