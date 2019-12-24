@@ -3,18 +3,24 @@ package eu.ctruillet.upssitech.sri.tp5;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import java.util.ArrayList;
+
 public class MainClass extends PApplet {
 	public static PApplet processing;
 	public PImage baniere;
 	public PImage map;
 	public int caseX=-1, caseY=-1;
 	private Jeu j;
+	private ArrayList<Button> Buttons = new ArrayList<Button>();
 	public static void main(String[] args) {
 		PApplet.main("eu.ctruillet.upssitech.sri.tp5.MainClass", args);
 	}
 
 	public void setup(){
 		processing = this;
+		Button b = new Button(this,200,200,50,"Hello");
+		Buttons.add(b);
+
 		this.j = new Jeu(this, 10);
 		j.addNewJoueur(Nature.HUMAIN);
 	}
@@ -50,6 +56,10 @@ public class MainClass extends PApplet {
 		noFill();
 		fill(0);
 
+		for(Button b : Buttons){
+			b.update();
+		}
+
 		if(caseX!=-1 && caseY!=-1)	text("Case " + caseX + ";"+caseY,825,200);
 
 
@@ -60,6 +70,20 @@ public class MainClass extends PApplet {
 		if((mouseX-15)/j.getPlateau().getTailleCase() <= 9 && (mouseX-15)>=0 && (mouseY-15)/j.getPlateau().getTailleCase() <= 9 && (mouseY-15)>= 0){
 			caseX = (mouseX-15)/j.getPlateau().getTailleCase();
 			caseY = (mouseY-15)/j.getPlateau().getTailleCase();
+		}
+
+		for(Button b : Buttons){
+			if(b.onClick(mouseX,mouseY)){
+
+			}
+		}
+
+
+	}
+
+	public void mouseReleased(){
+		for(Button b : Buttons){
+			b.onReleased();
 		}
 	}
 

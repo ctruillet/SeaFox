@@ -30,6 +30,7 @@ public class Jeu {
 	}
 
 	public void choixJoueurs(){
+
 		//ToDO
 	}
 
