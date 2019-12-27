@@ -12,7 +12,7 @@ public class Jeu {
 	private boolean fini;
 
 	//Constructeur
-	public Jeu(PApplet sketch, int taille){
+	public Jeu(PApplet sketch, int taille) {
 		this.sketch = sketch;
 		this.plateau = new Plateau(this.sketch, taille);
 		this.listeJoueur = new ArrayList<Joueur>();
@@ -20,51 +20,51 @@ public class Jeu {
 	}
 
 	//Méthodes
-	public void jouer(){
+	public void jouer() {
 		this.plateau.affichage();
 		//ToDO
 	}
 
-	public void draw(){
-		this.plateau.draw(15,15);
+	public void draw() {
+		this.plateau.draw(15, 15);
 	}
 
-	public void choixJoueurs(){
+	public void choixJoueurs() {
 
 		//ToDO
 	}
 
-	public String toString(){
+	public String toString() {
 		//ToDO
 		return "";
 	}
 
-	public void attributionNavire(){
+	public void attributionNavire() {
 		//ToDO
 	}
 
-	public void positionnementNavire(){
+	public void positionnementNavire() {
 		//ToDO
 	}
 
-	private void majJeuAvCommande(Commande cmd){
+	private void majJeuAvCommande(Commande cmd) {
 		//ToDO
 	}
 
-	private void majJeuCasTir(Commande cmd){
+	private void majJeuCasTir(Commande cmd) {
 		//ToDO
 	}
 
-	private void majJeuCasPeche(Commande cmd){
+	private void majJeuCasPeche(Commande cmd) {
 		//ToDO
 	}
 
-	private boolean majListeNavite(Navire n){
+	private boolean majListeNavite(Navire n) {
 		//ToDO
 		return true;
 	}
 
-	private void majJeuCasDeplacement(Commande cmd){
+	private void majJeuCasDeplacement(Commande cmd) {
 		//ToDO
 	}
 
@@ -72,23 +72,23 @@ public class Jeu {
 
 	}
 
-	public Plateau getPlateau(){
+	public Plateau getPlateau() {
 		return this.plateau;
 	}
 
-	public void addNewJoueur(Nature n){
-		Equipe e = new Equipe(this.sketch,n);
-		Navire nav = new SousMarin(sketch,0,0);
+	public void addNewJoueur(Nature n) {
+		Equipe e = new Equipe(this.sketch, n);
+		Navire nav = new SousMarin(sketch, 0, 0);
 		e.addNavire(nav);
-		this.plateau.getCaseAt(3,0).addOccupant(nav);
+		this.plateau.getCaseAt(3, 0).addOccupant(nav);
 
-		nav = new Destroyer(sketch,1,2);
+		nav = new Destroyer(sketch, 1, 2);
 		e.addNavire(nav);
-		this.plateau.getCaseAt(3,1).addOccupant(nav);
+		this.plateau.getCaseAt(3, 1).addOccupant(nav);
 
-		nav = new Chalutier(sketch,1,3);
+		nav = new Chalutier(sketch, 1, 3);
 		e.addNavire(nav);
-		this.plateau.getCaseAt(5,3).addOccupant(nav);
+		this.plateau.getCaseAt(5, 3).addOccupant(nav);
 
 		this.listeJoueur.add(e);
 

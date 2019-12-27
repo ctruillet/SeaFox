@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class Equipe implements JHumain,JIA {
+public class Equipe implements JHumain, JIA {
 	//Attributs
 	protected Statut myStatut;
 	private PApplet sketch;
@@ -14,7 +14,7 @@ public class Equipe implements JHumain,JIA {
 	protected ArrayList<Navire> listeNavire = new ArrayList<Navire>();
 
 	//Constructeur
-	public Equipe(PApplet sketch, Nature n){
+	public Equipe(PApplet sketch, Nature n) {
 		this.sketch = sketch;
 		this.myNature = n;
 	}

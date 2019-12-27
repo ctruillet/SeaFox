@@ -11,45 +11,46 @@ public class Plateau {
 	private CasePlateau[][] matrice;
 
 	//Constructeur
-	public Plateau(PApplet sketch, int taille){
+	public Plateau(PApplet sketch, int taille) {
 		this.sketch = sketch;
 		this.taille = taille;
-		this.tailleCase = (650 - 30)/taille;
+		this.tailleCase = (650 - 30) / taille;
 		this.matrice = new CasePlateau[this.taille][this.taille];
-		for(int i=0; i<this.taille; i++){
-			for(int j=0; j<this.taille; j++){
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
 				this.matrice[i][j] = new CasePlateau(this.sketch, this.tailleCase);
 			}
 		}
 	}
+
 	//Méthodes
-	public void affichage(){
-		for(int i=0; i<this.taille; i++){
-			for(int j=0; j<this.taille; j++){
+	public void affichage() {
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
 				System.out.println(this.matrice[i][j].affichage());
 			}
 			System.out.println("\n");
 		}
 	}
 
-	public String toString(){
+	public String toString() {
 		//ToDO
 		return "";
 	}
 
-	public int getTaille(){
+	public int getTaille() {
 		return this.taille;
 	}
 
-	public CasePlateau getCaseAt(int i, int j){
+	public CasePlateau getCaseAt(int i, int j) {
 		return this.matrice[i][j];
 	}
 
-	public void draw(int x, int y){ //ToDO
+	public void draw(int x, int y) { //ToDO
 		sketch.noFill();
-		for(int i=0; i<this.taille; i++){
-			for(int j=0; j<this.taille; j++){
-				this.matrice[i][j].draw(x + i*this.tailleCase,y+ j*this.tailleCase);
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
+				this.matrice[i][j].draw(x + i * this.tailleCase, y + j * this.tailleCase);
 
 			}
 		}

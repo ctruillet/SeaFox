@@ -18,12 +18,13 @@ public abstract class Navire {
 	protected Point position;
 
 	//Constructeur
-	public Navire(PApplet sketch, int i, TypeNav t, int n){
+	public Navire(PApplet sketch, int i, TypeNav t, int n) {
 		this.sketch = sketch;
 		this.id = i;
 		this.myType = t;
 		this.numEq = n;
 	}
+
 	//Méthodes
 	public int getId() {
 		return id;
@@ -33,7 +34,7 @@ public abstract class Navire {
 		return numEq;
 	}
 
-	public Point getPosition(){
+	public Point getPosition() {
 		return this.position;
 	}
 
@@ -49,14 +50,15 @@ public abstract class Navire {
 		this.etat = etat;
 	}
 
-	public boolean estValide(){
-		return this.etat!=0;
+	public boolean estValide() {
+		return this.etat != 0;
 	}
 
-	public boolean estCoule(){
-		return this.etat==0;
+	public boolean estCoule() {
+		return this.etat == 0;
 	}
-	public void seDeplacer(Point p){
+
+	public void seDeplacer(Point p) {
 		//ToDo
 	}
 
@@ -68,11 +70,11 @@ public abstract class Navire {
 		//ToDO
 	}
 
-	public String toString(){
-		return (this.id+";"+this.position+";"+this.numEq+";"+this.myType);
+	public String toString() {
+		return (this.id + ";" + this.position + ";" + this.numEq + ";" + this.myType);
 	}
 
-	public int getVitesse(){
+	public int getVitesse() {
 		return this.vitesse;
 	}
 

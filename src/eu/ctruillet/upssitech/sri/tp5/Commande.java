@@ -9,24 +9,25 @@ public class Commande {
 	private Equipe equipe;
 
 	//Constructeur
-	public Commande (Equipe eq, int id, int a, int d){
+	public Commande(Equipe eq, int id, int a, int d) {
 		//ToDo
 	}
-	public Commande(Equipe eq, String strldNav, String strAction, String strDirection){
+
+	public Commande(Equipe eq, String strldNav, String strAction, String strDirection) {
 		//ToDo
 	}
 
 	//Méthodes
-	public Equipe getEquipe(){
+	public Equipe getEquipe() {
 		return this.equipe;
 	}
 
-	public int getIdNavire(){
+	public int getIdNavire() {
 		return this.idNavire;
 	}
 
-	public void setIdNavire(int idNavire){
-		this.idNavire=idNavire;
+	public void setIdNavire(int idNavire) {
+		this.idNavire = idNavire;
 	}
 
 	public Action getActionChoisie() {
@@ -45,7 +46,7 @@ public class Commande {
 		DirectionChoisie = directionChoisie;
 	}
 
-	public String toString(){
+	public String toString() {
 		//ToDo
 		return "";
 	}
