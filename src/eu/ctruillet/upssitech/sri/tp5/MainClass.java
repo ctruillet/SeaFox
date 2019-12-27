@@ -10,18 +10,30 @@ public class MainClass extends PApplet {
 	public PImage baniere;
 	public PImage map;
 	public int caseX=-1, caseY=-1;
+	private FSM state;
 	private Jeu j;
-	private ArrayList<Button> Buttons = new ArrayList<Button>();
+	private ArrayList<Button> Buttons = new ArrayList<>();
 	public static void main(String[] args) {
 		PApplet.main("eu.ctruillet.upssitech.sri.tp5.MainClass", args);
 	}
 
 	public void setup(){
 		processing = this;
-		Button b = new Button(this,200,200,50,"Hello");
+		//Initialisation
+		this.state = FSM.INIT;
+
+		Button b = new Button(this,737,220,45,"1 Joueur");
+		Buttons.add(b);
+		b = new Button(this,825,220,45,"2 Joueurs");
+		Buttons.add(b);
+		b = new Button(this,913,220,45,"3 Joueurs");
 		Buttons.add(b);
 
+
 		this.j = new Jeu(this, 10);
+
+		this.state = FSM.CHOIX_NB_JOUEUR;
+
 		j.addNewJoueur(Nature.HUMAIN);
 	}
 
@@ -40,12 +52,17 @@ public class MainClass extends PApplet {
 		image(map,5,5);
 
 		//Affichage du jeu
-		j.draw();
+		if(this.state!=FSM.INIT && this.state!=FSM.CHOIX_NB_JOUEUR){
+			j.draw();
+		}
+
+
+		//System.out.println(this.mouseX + "," + this.mouseY );
 
 		fill(119,224,255);
 		noStroke();
 
-		//Meny
+		//Menu
 		rect(650,0,350,800);
 
 		//Affichage de la baniere
@@ -56,11 +73,35 @@ public class MainClass extends PApplet {
 		noFill();
 		fill(0);
 
+
+		switch(this.state){
+			case INIT:
+				break;
+
+			case CHOIX_NB_JOUEUR:
+				break;
+
+			case PLACEMENT_BATEAU:
+
+				break;
+
+			case TOUR:
+
+				break;
+
+			case FIN:
+
+				break;
+
+			default:
+				break;
+		}
+
 		for(Button b : Buttons){
 			b.update();
 		}
 
-		if(caseX!=-1 && caseY!=-1)	text("Case " + caseX + ";"+caseY,825,200);
+		if(caseX!=-1 && caseY!=-1)	text("Case " + caseX + ";"+caseY,825,187);
 
 
 	}
@@ -74,7 +115,8 @@ public class MainClass extends PApplet {
 
 		for(Button b : Buttons){
 			if(b.onClick(mouseX,mouseY)){
-
+				System.out.println(b.text + " est pressé");
+				this.state=FSM.PLACEMENT_BATEAU;
 			}
 		}
 

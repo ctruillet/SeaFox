@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Button {
 	protected PApplet sketch;
-	protected PVector[] forme = new PVector[6];
+	protected PVector[] forme = new PVector[4];
 	protected int x, y; //Coordonnées
 	protected int l; //Largeur
 	protected String text;
@@ -29,12 +29,12 @@ public class Button {
 		this.colorH.getRGB();
 
 		// Créer la forme
-		forme[0] = new PVector( (float)(l),0);
-		forme[1] = new PVector((float) (l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
-		forme[2] = new PVector((float) (-l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
-		forme[3] = new PVector((float)-l, 0);
-		forme[4] = new PVector((float) (-l*Math.cos(Math.PI/6)), (float)(-l*Math.sin(Math.PI/6)));
-		forme[5] = new PVector((float) (l*Math.cos(Math.PI/6)), (float)(-l*Math.sin(Math.PI/6)));
+		//forme[0] = new PVector( (float)(l),0);
+		forme[0] = new PVector((float) (l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
+		forme[1] = new PVector((float) (-l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
+		//forme[3] = new PVector((float)-l, 0);
+		forme[2] = new PVector((float) (-l*Math.cos(Math.PI/6)), (float)(-l*Math.sin(Math.PI/6)));
+		forme[3] = new PVector((float) (l*Math.cos(Math.PI/6)), (float)(-l*Math.sin(Math.PI/6)));
 		//forme[6] = new PVector((float)(l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
 
 		this.b=recreateShape(forme);
@@ -46,6 +46,7 @@ public class Button {
 		sketch.fill(this.colorT.getRGB());
 		sketch.textAlign(sketch.CENTER,sketch.CENTER);
 		sketch.text(this.text,this.x,this.y);
+		sketch.fill(0);
 	}
 
 	void update(int x, int y) { // move the form at the current position
