@@ -5,7 +5,6 @@ public class Commande {
 	//Attributs
 	private int idNavire;
 	private Action ActionChoisie;
-	private Direction DirectionChoisie;
 	private Equipe equipe;
 
 	//Constructeur
@@ -36,14 +35,6 @@ public class Commande {
 
 	public void setActionChoisie(Action actionChoisie) {
 		ActionChoisie = actionChoisie;
-	}
-
-	public Direction getDirectionChoisie() {
-		return DirectionChoisie;
-	}
-
-	public void setDirectionChoisie(Direction directionChoisie) {
-		DirectionChoisie = directionChoisie;
 	}
 
 	public String toString() {

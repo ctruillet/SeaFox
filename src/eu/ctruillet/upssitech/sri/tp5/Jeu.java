@@ -47,6 +47,9 @@ public class Jeu {
 	}
 
 	public void positionnementNavire() {
+		for(int i=0; i<this.nbJoueur; i++){
+			MainClass.processing.text("Placement des bateaux du joueur " + i,825,200+20*i);
+		}
 		//ToDO
 	}
 
@@ -62,17 +65,13 @@ public class Jeu {
 		//ToDO
 	}
 
-	private boolean majListeNavite(Navire n) {
+	private boolean majListeNavire(Navire n) {
 		//ToDO
 		return true;
 	}
 
 	private void majJeuCasDeplacement(Commande cmd) {
 		//ToDO
-	}
-
-	public static void main(String[] args) {
-
 	}
 
 	public Plateau getPlateau() {

@@ -97,7 +97,7 @@ public class MainClass extends PApplet {
 				break;
 
 			case PLACEMENT_BATEAU:
-
+				j.positionnementNavire();
 				break;
 
 			case TOUR:
@@ -126,23 +126,33 @@ public class MainClass extends PApplet {
 			caseY = (mouseY - 15) / j.getPlateau().getTailleCase();
 		}
 
-		for (Button b : Buttons_ChoixNbJoueur) {
-			if (b.onClick(mouseX, mouseY)) {
-				if(b.getText().equals("1 Joueur")){ this.j.setNbJoueur(2); }
-				if(b.getText().equals("2 Joueurs")){ this.j.setNbJoueur(3); }
-				if(b.getText().equals("3 Joueurs")){ this.j.setNbJoueur(4); }
+		if(this.state==FSM.CHOIX_NB_JOUEUR) {
+			for (Button b : Buttons_ChoixNbJoueur) {
+				if (b.onClick(mouseX, mouseY)) {
+					if (b.getText().equals("1 Joueur")) {
+						this.j.setNbJoueur(2);
+					}
+					if (b.getText().equals("2 Joueurs")) {
+						this.j.setNbJoueur(3);
+					}
+					if (b.getText().equals("3 Joueurs")) {
+						this.j.setNbJoueur(4);
+					}
 
-				System.out.println(this.j.getNbJoueur() + " Joueurs");
+					System.out.println(this.j.getNbJoueur() + " Joueurs");
 
-				this.state = FSM.PLACEMENT_BATEAU;
+					this.state = FSM.PLACEMENT_BATEAU;
+				}
 			}
 		}
-
-		for (Button b : Buttons_Actions) {
-			if (b.onClick(mouseX, mouseY)) {
-				System.out.println("\"" + b.text + "\"" + " est pressé");
-				if(b.getText().equals("Regles")){ this.wr.setVisible(); }
-				//this.state = FSM.PLACEMENT_BATEAU;
+		if(this.state==FSM.TOUR) {
+			for (int i = 0; i < this.Buttons_Actions.size(); i++) {
+				if (this.Buttons_Actions.get(i).onClick(mouseX, mouseY)) {
+					System.out.println("\"" + this.Buttons_Actions.get(i).text + "\"" + " est pressé");
+					if (this.Buttons_Actions.get(i).getText().equals("Regles")) {
+						this.wr.setVisible();
+					}
+				}
 			}
 		}
 

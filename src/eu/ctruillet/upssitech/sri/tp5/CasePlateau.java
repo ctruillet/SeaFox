@@ -24,7 +24,11 @@ public class CasePlateau {
 	}
 
 	public void addOccupant(Navire occupant) {
-		//ToDo
+		for(Navire n : this.occupants){
+			if(occupant.getType() == n.getType()){
+				return;
+			}
+		}
 		this.occupants.add(occupant);
 	}
 

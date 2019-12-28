@@ -1,0 +1,52 @@
+TP Final POO
+
+Bataille navale : Jeu composé de 3 équipes + 1 IA
+	-> 2 eq militaires
+	-> 1 eq neutre
+	-> 1 plateau de jeu pour visualiser les mouvements
+
+Chaque équipe est composée de plusieurs bateaux
+	-> Chalutier
+	-> Destroyer
+	-> Sous-marin
+
+TIR & DEPLACEMENT :
+	-> Chalutier (3 vies (Chalutier -> Chalutier sans filet -> Radeau de la meduse))
+		-> si sur la case d'un sous-marin : peut attaquer
+		-> 1 filets de peche (esquive 15%)
+		-> 3 cases/tour
+		-> Pecher
+	-> Destroyer (2 vies)
+		-> Tir à 2 cases (20*2 ATK)
+		-> 2 cases/tour
+	-> Sous-Marin (1 vie)
+		-> Tir à 3 cases
+		-> Soit attaque, soit se deplace (2 cases/tour)
+
+POINTS (calculés par tours) :
+	-> Chalutier  en vie : 			 5pts  *1.5/(nbJoueur-1)
+	-> Destroyer  en vie : 			 10pts *1.5/(nbJoueur-1)
+	-> Sous-Marin en vie :			 15pts *1.5/(nbJoueur-1)
+	-> Destruction Chalutier  : 	 23pts *1.5/(nbJoueur-1)
+	-> Destruction Destroyer  : 	 32pts *1.5/(nbJoueur-1)
+	-> Destruction Sous-Marin : 	 45pts *1.5/(nbJoueur-1)
+	-> Destruction Equipe : 		200pts *1.5/(nbJoueur-1)
+
+FIN à 420pts
+
+1 IA parmi les 3 joueurs. Les autres joueurs sont les humains qui tapent leurs commades en ligne.
+Fin du jeu = 1 équipe detruite -> gagnant (celui qui a le plus de points
+
+CLASSES
+-> Plateau
+	-> Case
+-> Bateau (abstract)
+	-> Chalutier (1 cases)
+	-> Destroyer (2 cases)
+	-> Sous-marin (3 cases)
+-> Joueur
+-> Type d'Action
+
+Diagramme UML sur le support de cours
+
+
