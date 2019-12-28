@@ -15,10 +15,17 @@ public class WindowsRules extends PApplet {
 
 	public void settings(){
 		size(200,500);
+
+	}
+
+	public void setup(){
+		surface.setIcon(loadImage(MainClass.ICON));
+		surface.setTitle("SeaFox - Règles");
+		surface.setResizable(true);
 	}
 
 	public void draw(){
-		text("Hi!",50,250);
+
 	}
 
 	public void setVisible() {

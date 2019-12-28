@@ -7,10 +7,13 @@ import processing.core.PImage;
 import java.util.ArrayList;
 
 public class MainClass extends PApplet {
-	private final static String ICON = "../doc/icon.png";
-	private final static String TITLE = "SeaFox";
+	//Attributs
 	public static PApplet processing;
 	public static WindowsRules wr = new WindowsRules();
+	protected final static String ICON = "../doc/icon.png";
+	protected final static String TITLE = "SeaFox";
+
+
 	protected int caseX = -1, caseY = -1;
 	protected FSM state;
 	protected Jeu j;
@@ -19,6 +22,7 @@ public class MainClass extends PApplet {
 	private PImage baniere;
 	private PImage map;
 
+	//Methodes
 	public static void main(String[] args) {
 		PApplet.main("eu.ctruillet.upssitech.sri.tp5.MainClass", args);
 	}
@@ -69,9 +73,6 @@ public class MainClass extends PApplet {
 			j.draw();
 		}
 
-
-		//System.out.println(this.mouseX + "," + this.mouseY );
-
 		fill(119, 224, 255);
 		noStroke();
 
@@ -92,6 +93,7 @@ public class MainClass extends PApplet {
 				break;
 
 			case CHOIX_NB_JOUEUR:
+				displayChoixNbJoueur();
 				break;
 
 			case PLACEMENT_BATEAU:
@@ -99,7 +101,7 @@ public class MainClass extends PApplet {
 				break;
 
 			case TOUR:
-
+				displayActionButtons();
 				break;
 
 			case FIN:
@@ -110,13 +112,7 @@ public class MainClass extends PApplet {
 				break;
 		}
 
-		for (Button b : Buttons_ChoixNbJoueur) {
-			b.update();
-		}
 
-		for (Button b : Buttons_Actions) {
-			b.update();
-		}
 
 		if (caseX != -1 && caseY != -1) text("Case " + caseX + ";" + caseY, 825, 187);
 
@@ -132,7 +128,12 @@ public class MainClass extends PApplet {
 
 		for (Button b : Buttons_ChoixNbJoueur) {
 			if (b.onClick(mouseX, mouseY)) {
-				System.out.println(b.text + " est pressé");
+				if(b.getText().equals("1 Joueur")){ this.j.setNbJoueur(2); }
+				if(b.getText().equals("2 Joueurs")){ this.j.setNbJoueur(3); }
+				if(b.getText().equals("3 Joueurs")){ this.j.setNbJoueur(4); }
+
+				System.out.println(this.j.getNbJoueur() + " Joueurs");
+
 				this.state = FSM.PLACEMENT_BATEAU;
 			}
 		}
@@ -140,6 +141,7 @@ public class MainClass extends PApplet {
 		for (Button b : Buttons_Actions) {
 			if (b.onClick(mouseX, mouseY)) {
 				System.out.println("\"" + b.text + "\"" + " est pressé");
+				if(b.getText().equals("Regles")){ this.wr.setVisible(); }
 				//this.state = FSM.PLACEMENT_BATEAU;
 			}
 		}
@@ -154,7 +156,7 @@ public class MainClass extends PApplet {
 
 		for (Button b : Buttons_Actions) {
 			b.onReleased();
-			this.wr.setVisible();
+
 		}
 	}
 
@@ -200,8 +202,18 @@ public class MainClass extends PApplet {
 
 	}
 
-	protected void displayActionButtons(){
-
+	protected void displayChoixNbJoueur(){
+		for (Button b : Buttons_ChoixNbJoueur) {
+			b.update();
+		}
 	}
+
+	protected void displayActionButtons(){
+		for (Button b : Buttons_Actions) {
+			b.update();
+		}
+	}
+
+
 
 }

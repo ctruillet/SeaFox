@@ -101,5 +101,8 @@ public class Button {
 		return oddNodes;
 	}
 
+	public String getText() {
+		return text;
+	}
 }
 

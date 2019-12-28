@@ -10,6 +10,8 @@ public class Jeu {
 	private Plateau plateau;
 	private ArrayList<Joueur> listeJoueur;
 	private boolean fini;
+	int tourJoueur;
+	int nbJoueur;
 
 	//Constructeur
 	public Jeu(PApplet sketch, int taille) {
@@ -17,6 +19,7 @@ public class Jeu {
 		this.plateau = new Plateau(this.sketch, taille);
 		this.listeJoueur = new ArrayList<Joueur>();
 		this.fini = false;
+		this.tourJoueur=0; //On va du Joueur 0 à Joueur n-1 (n maximum 4)
 	}
 
 	//Méthodes
@@ -95,4 +98,19 @@ public class Jeu {
 
 	}
 
+	public void nextTurn(){
+		this.tourJoueur=(this.tourJoueur+1)%this.listeJoueur.size();
+	}
+
+	public int getTourJoueur() {
+		return tourJoueur;
+	}
+
+	public int getNbJoueur() {
+		return nbJoueur;
+	}
+
+	public void setNbJoueur(int nbJoueur) {
+		this.nbJoueur = nbJoueur;
+	}
 }
