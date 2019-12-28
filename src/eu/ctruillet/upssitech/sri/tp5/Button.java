@@ -15,6 +15,7 @@ public class Button {
 	protected boolean isClicked;
 	protected PShape b;
 	protected Color colorH, colorT;
+	protected int textSize;
 
 
 	public Button(PApplet sketch, int x, int y, int l, String texte) {
@@ -23,6 +24,7 @@ public class Button {
 		this.x = x;
 		this.y = y;
 		this.text = texte;
+		this.textSize = sketch.max(14,2*l/9);
 		this.isClicked = false;
 		this.colorH = new Color(213, 253, 254, 255); //Couleur de fond
 		this.colorT = new Color(189, 74, 35);  //Couleur de la police
@@ -45,6 +47,7 @@ public class Button {
 		sketch.shape(this.b, this.x, this.y);
 		sketch.fill(this.colorT.getRGB());
 		sketch.textAlign(sketch.CENTER, sketch.CENTER);
+		sketch.textSize(this.textSize);
 		sketch.text(this.text, this.x, this.y);
 		sketch.fill(0);
 	}

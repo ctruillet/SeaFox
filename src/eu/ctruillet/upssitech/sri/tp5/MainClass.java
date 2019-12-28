@@ -7,18 +7,17 @@ import processing.core.PImage;
 import java.util.ArrayList;
 
 public class MainClass extends PApplet {
-	public static PApplet processing;
-	private PImage baniere;
-	private PImage map;
 	private final static String ICON = "../doc/icon.png";
 	private final static String TITLE = "SeaFox";
-
-	public int caseX = -1, caseY = -1;
-
-	public FSM state;
-	public Jeu j;
-
-	public ArrayList<Button> Buttons = new ArrayList<>();
+	public static PApplet processing;
+	public static WindowsRules wr = new WindowsRules();
+	protected int caseX = -1, caseY = -1;
+	protected FSM state;
+	protected Jeu j;
+	protected ArrayList<Button> Buttons_ChoixNbJoueur = new ArrayList<>();
+	protected ArrayList<Button> Buttons_Actions = new ArrayList<>();
+	private PImage baniere;
+	private PImage map;
 
 	public static void main(String[] args) {
 		PApplet.main("eu.ctruillet.upssitech.sri.tp5.MainClass", args);
@@ -34,13 +33,8 @@ public class MainClass extends PApplet {
 
 		this.state = FSM.INIT;
 
-		Button b = new Button(this, 737, 220, 45, "1 Joueur");
-		Buttons.add(b);
-		b = new Button(this, 825, 220, 45, "2 Joueurs");
-		Buttons.add(b);
-		b = new Button(this, 913, 220, 45, "3 Joueurs");
-		Buttons.add(b);
-
+		createButtons_ChoixNbJoueur();
+		createButtons_Actions();
 
 		this.j = new Jeu(this, 10);
 
@@ -116,7 +110,11 @@ public class MainClass extends PApplet {
 				break;
 		}
 
-		for (Button b : Buttons) {
+		for (Button b : Buttons_ChoixNbJoueur) {
+			b.update();
+		}
+
+		for (Button b : Buttons_Actions) {
 			b.update();
 		}
 
@@ -132,10 +130,17 @@ public class MainClass extends PApplet {
 			caseY = (mouseY - 15) / j.getPlateau().getTailleCase();
 		}
 
-		for (Button b : Buttons) {
+		for (Button b : Buttons_ChoixNbJoueur) {
 			if (b.onClick(mouseX, mouseY)) {
 				System.out.println(b.text + " est pressé");
 				this.state = FSM.PLACEMENT_BATEAU;
+			}
+		}
+
+		for (Button b : Buttons_Actions) {
+			if (b.onClick(mouseX, mouseY)) {
+				System.out.println("\"" + b.text + "\"" + " est pressé");
+				//this.state = FSM.PLACEMENT_BATEAU;
 			}
 		}
 
@@ -143,9 +148,60 @@ public class MainClass extends PApplet {
 	}
 
 	public void mouseReleased() {
-		for (Button b : Buttons) {
+		for (Button b : Buttons_ChoixNbJoueur) {
 			b.onReleased();
 		}
+
+		for (Button b : Buttons_Actions) {
+			b.onReleased();
+			this.wr.setVisible();
+		}
+	}
+
+	protected void createButtons_ChoixNbJoueur(){
+		Button b;
+
+		b = new Button(this, 737, 220, 45, "1 Joueur");
+		Buttons_ChoixNbJoueur.add(b);
+
+		b = new Button(this, 825, 220, 45, "2 Joueurs");
+		Buttons_ChoixNbJoueur.add(b);
+
+		b = new Button(this, 913, 220, 45, "3 Joueurs");
+		Buttons_ChoixNbJoueur.add(b);
+	}
+
+	protected void createButtons_Actions(){
+		Button b;
+
+		//Actions du Chalutier
+		b = new Button(this, 760, 300, 60, "Attaquer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 890, 300, 60, "Deplacer");
+		Buttons_Actions.add(b);
+
+		//Actions du Destroyer
+		b = new Button(this, 760, 420, 60, "Attaquer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 890, 420, 60, "Deplacer");
+		Buttons_Actions.add(b);
+
+		//Actions du SousMarin
+		b = new Button(this, 760, 540, 60, "Attaquer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 890, 540, 60, "Deplacer");
+		Buttons_Actions.add(b);
+
+		//Actions Génerales
+		b = new Button(this, 325, 720, 90, "Fin de Tour");
+		Buttons_Actions.add(b);
+		b = new Button(this, 50, 770, 40, "Regles");
+		Buttons_Actions.add(b);
+
+	}
+
+	protected void displayActionButtons(){
+
 	}
 
 }
