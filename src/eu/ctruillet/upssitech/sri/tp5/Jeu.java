@@ -141,6 +141,9 @@ public class Jeu {
 
 		} else {
 			if (this.listeJoueur.get(nbEq).getListeNavire().size() == 0) {            //Ajout Chalutier
+
+				if (!this.plateau.getCaseAt(caseX, caseY).canIAdd(TypeNav.CHALUTIER)) return;
+
 				this.getPlateau().setCrossIfICantAdd(TypeNav.CHALUTIER, false);
 
 				n = new Chalutier(sketch, 0, nbEq);
@@ -149,6 +152,9 @@ public class Jeu {
 				this.getPlateau().setCrossIfICantAdd(TypeNav.DESTROYER, true);
 
 			} else if (this.listeJoueur.get(nbEq).getListeNavire().size() == 1) {    //Ajout Destroyer
+
+				if (!this.plateau.getCaseAt(caseX, caseY).canIAdd(TypeNav.DESTROYER)) return;
+
 				this.getPlateau().setCrossIfICantAdd(TypeNav.DESTROYER, false);
 
 				n = new Destroyer(sketch, 1, nbEq);
@@ -157,6 +163,9 @@ public class Jeu {
 				this.getPlateau().setCrossIfICantAdd(TypeNav.SOUSMARIN, true);
 
 			} else {    //Ajout Sous Marin
+
+				if (!this.plateau.getCaseAt(caseX, caseY).canIAdd(TypeNav.SOUSMARIN)) return;
+
 				this.getPlateau().setCrossIfICantAdd(TypeNav.SOUSMARIN, false);
 
 				n = new SousMarin(sketch, 2, nbEq);
@@ -166,7 +175,9 @@ public class Jeu {
 
 				//On passe au joueur suivant
 				this.nextTurn();
-				if (nbEq == this.nbJoueur - 2) this.addNewBateau(this.getTourJoueur(), caseX, caseY);
+
+				//si le prochain joueur est l'IA
+				if (nbEq == this.nbJoueur - 2) this.addNewBateau(this.getTourJoueur(), (caseX+1)%this.getPlateau().getTaille(), (caseY+1)%this.getPlateau().getTaille());
 
 			}
 
