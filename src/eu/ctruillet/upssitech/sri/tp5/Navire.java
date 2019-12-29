@@ -1,7 +1,6 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.awt.*;
 

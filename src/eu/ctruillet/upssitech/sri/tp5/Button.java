@@ -6,7 +6,7 @@ import processing.core.PVector;
 
 import java.awt.*;
 
-public class Button {
+class Button {
 	protected PApplet sketch;
 	protected PVector[] forme = new PVector[4];
 	protected int x, y; //Coordonnées
@@ -24,7 +24,7 @@ public class Button {
 		this.x = x;
 		this.y = y;
 		this.text = texte;
-		this.textSize = sketch.max(14,2*l/9);
+		this.textSize = PApplet.max(14,2*l/9);
 		this.isClicked = false;
 		this.colorH = new Color(213, 253, 254, 255); //Couleur de fond
 		this.colorT = new Color(189, 74, 35);  //Couleur de la police
@@ -61,14 +61,14 @@ public class Button {
 	public boolean onClick(int x, int y) {
 		if (containsPoint(forme, x - this.x, y - this.y)) {
 			this.isClicked = true;
-			b.scale((float) 0.8);
+			b.scale((float) 0.9);
 			return true;
 		}
 		return false;
 	}
 
 	public void onReleased() {
-		if ((containsPoint(forme, x - this.x, y - this.y)) && (this.isClicked)) {
+		if ((containsPoint(forme, 0, 0)) && (this.isClicked)) {
 			this.isClicked = false;
 		}
 		this.b = recreateShape(forme);

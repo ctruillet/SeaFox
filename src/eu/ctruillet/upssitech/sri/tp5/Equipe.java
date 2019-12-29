@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class Equipe implements JHumain, JIA {
 	//Attributs
-	protected Statut myStatut;
+	private Statut myStatut;
 	private PApplet sketch;
-	protected Nature myNature;
-	protected int id;
-	protected Commande myCommande;
-	protected ArrayList<Navire> listeNavire = new ArrayList<Navire>();
+	private Nature myNature;
+	int id;
+	private Commande myCommande;
+	private ArrayList<Navire> listeNavire = new ArrayList<>();
 
 	//Constructeur
 	public Equipe(PApplet sketch, Nature n, int id) {

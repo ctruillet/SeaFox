@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class CasePlateau {
 	//Attributs
-	private ArrayList<Navire> occupants = new ArrayList<Navire>();
+	private ArrayList<Navire> occupants = new ArrayList<>();
 	private int tailleCase;
 	private PApplet sketch;
-	protected int x;
-	protected int y;
+	private int x;
+	private int y;
 	private boolean isCross;
 
 	//Constructeur
@@ -25,7 +25,7 @@ public class CasePlateau {
 	}
 
 	//Méthodes
-	public ArrayList<Navire> getOccupants() {
+	private ArrayList<Navire> getOccupants() {
 		return this.occupants;
 	}
 
@@ -35,17 +35,24 @@ public class CasePlateau {
 		}
 	}
 
-	public String toString() {
-		//ToDo
-		return "";
-	}
-
 	public boolean estOccupee() {
 		return !this.occupants.isEmpty();
 	}
 
 	public boolean estVide() {
 		return this.occupants.isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		return "CasePlateau{" +
+				"occupants=" + occupants +
+				", tailleCase=" + tailleCase +
+				", sketch=" + sketch +
+				", x=" + x +
+				", y=" + y +
+				", isCross=" + isCross +
+				'}';
 	}
 
 	public boolean canIAdd(TypeNav type){
@@ -64,9 +71,9 @@ public class CasePlateau {
 	}
 
 	public String affichage() {
-		String s = "[";
+		StringBuilder s = new StringBuilder("[");
 		for (Navire e : this.occupants) {
-			s += e.toString() + ";";
+			s.append(e.toString()).append(";");
 		}
 		return s + "]";
 	}

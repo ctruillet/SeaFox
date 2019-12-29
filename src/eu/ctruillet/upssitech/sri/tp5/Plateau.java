@@ -2,6 +2,8 @@ package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
 
+import java.util.Arrays;
+
 
 public class Plateau {
 	//Attributs
@@ -33,11 +35,6 @@ public class Plateau {
 		}
 	}
 
-	public String toString() {
-		//ToDO
-		return "";
-	}
-
 	public int getTaille() {
 		return this.taille;
 	}
@@ -54,6 +51,15 @@ public class Plateau {
 
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Plateau{" +
+				"taille=" + taille +
+				", tailleCase=" + tailleCase +
+				", matrice=" + Arrays.toString(matrice) +
+				'}';
 	}
 
 	public void setCrossAtCaseFull(boolean b){
@@ -79,10 +85,7 @@ public class Plateau {
 
 
 	public boolean onClick(int x, int y){
-		if (x>=15 && x<=(15+this.tailleCase*this.taille) && y>=15 && y<=(15+this.tailleCase*this.taille)) {
-			return true;
-		}
-		return false;
+		return x >= 15 && x <= (15 + this.tailleCase * this.taille) && y >= 15 && y <= (15 + this.tailleCase * this.taille);
 	}
 
 	public int getCaseXOnClick(int x){

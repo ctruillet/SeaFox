@@ -1,7 +1,6 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
-import sun.security.krb5.internal.crypto.Des;
 
 import java.util.ArrayList;
 
@@ -10,19 +9,21 @@ public class Jeu {
 	private PApplet sketch;
 	private Plateau plateau;
 	private ArrayList<Joueur> listeJoueur;
-	private boolean fini;
-	int tourJoueur;
+	private boolean fini = false;
+	private String message;
+	private int tourJoueur;
 	int nbTour;
-	int nbJoueur;
+	private int nbJoueur;
 
 	//Constructeur
 	public Jeu(PApplet sketch, int taille) {
 		this.sketch = sketch;
 		this.plateau = new Plateau(this.sketch, taille);
-		this.listeJoueur = new ArrayList<Joueur>();
-		this.fini = false;
+		this.listeJoueur = new ArrayList<>();
 		this.tourJoueur = 0; //On va du Joueur 0 à Joueur n-1 (n maximum 4)
 		this.nbTour = 0;
+		this.message = "Joueur 1, c'est à vous!";
+
 	}
 
 	//Méthodes
@@ -73,7 +74,7 @@ public class Jeu {
 	 * @param n
 	 * @param id
 	 */
-	public void addNewJoueur(Nature n, int id) {
+	private void addNewJoueur(Nature n, int id) {
 		Equipe e = new Equipe(this.sketch, Nature.HUMAIN, id);
 		this.listeJoueur.add(e);
 		System.out.println("Ajout du joueur n°" + id + " (" + n + ")");
@@ -104,7 +105,7 @@ public class Jeu {
 		return this.plateau;
 	}
 
-	public boolean addNewBateauAt(Navire n, int caseX, int caseY) {
+	private boolean addNewBateauAt(Navire n, int caseX, int caseY) {
 		if (this.plateau.getCaseAt(caseX, caseY).canIAdd(n.getType())) {
 			this.listeJoueur.get(n.getNumEq()).addNavire(n);
 			this.plateau.getCaseAt(caseX, caseY).addOccupant(n);
@@ -115,6 +116,12 @@ public class Jeu {
 		return false;
 	}
 
+	/**
+	 * Ajoute un nouveau bateau à l'équipe nbEq à la case caseX,caseY
+	 * @param nbEq
+	 * @param caseX
+	 * @param caseY
+	 */
 	public void addNewBateau(int nbEq, int caseX, int caseY) {
 		Navire n;
 
@@ -125,7 +132,6 @@ public class Jeu {
 		if (nbEq == this.nbJoueur - 1) { //Placements bateaux de l'IA
 			n = new Chalutier(sketch, 0, nbEq);
 			while (!addNewBateauAt(n, (int) (Math.random() * (10)), (int) (Math.random() * (10)))) ;
-
 
 			n = new Destroyer(sketch, 1, nbEq);
 			while (!addNewBateauAt(n, (int) (Math.random() * (10)), (int) (Math.random() * (10)))) ;
@@ -184,11 +190,13 @@ public class Jeu {
 		}
 	}
 
-	public void nextTurn() {
+	private void nextTurn() {
 		if (this.tourJoueur + 1 >= this.nbJoueur) {
 			this.nbTour++;
 		}
 		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
+
+		this.setMessage("Joueur "+ (this.tourJoueur+1) +", c'est à vous !");
 
 	}
 
@@ -202,5 +210,13 @@ public class Jeu {
 
 	public void setNbJoueur(int nbJoueur) {
 		this.nbJoueur = nbJoueur;
+	}
+
+	public String getMessage(){
+		return this.message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

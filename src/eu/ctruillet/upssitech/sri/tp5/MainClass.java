@@ -1,9 +1,9 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.core.PImage;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class MainClass extends PApplet {
@@ -13,15 +13,16 @@ public class MainClass extends PApplet {
 	protected final static String ICON = "../doc/icon.png";
 	protected final static String TITLE = "SeaFox";
 
-
 	protected int caseX = -1, caseY = -1;
 	protected FSM state;
 	protected Jeu j;
 	protected ArrayList<Button> Buttons_ChoixNbJoueur = new ArrayList<>();
 	protected ArrayList<Button> Buttons_Actions = new ArrayList<>();
+	protected String message = "";
+
 	private PImage baniere;
 	private PImage map;
-	protected boolean selectCase;
+
 
 	//Methodes
 	public static void main(String[] args) {
@@ -31,7 +32,7 @@ public class MainClass extends PApplet {
 	public void setup() {
 		//Initialisation
 		processing = this;
-		changeAppTitle(TITLE);
+		changeAppTitle();
 		changeAppIcon(loadImage(ICON));
 		surface.setResizable(false);
 
@@ -44,8 +45,6 @@ public class MainClass extends PApplet {
 		this.j = new Jeu(this, 10);
 
 		this.state = FSM.CHOIX_NB_JOUEUR;
-
-		//j.addNewJoueur(Nature.HUMAIN);
 	}
 
 	public void settings() {
@@ -54,8 +53,8 @@ public class MainClass extends PApplet {
 		size(1000, 800);
 	}
 
-	private void changeAppTitle(String title){
-		surface.setTitle(title);
+	private void changeAppTitle(){
+		surface.setTitle(MainClass.TITLE);
 	}
 
 	private void changeAppIcon(PImage img) {
@@ -88,6 +87,13 @@ public class MainClass extends PApplet {
 		noFill();
 		fill(0);
 
+		fill((new Color(189, 74, 35)).getRGB());
+		textSize(20);
+		this.message = j.getMessage();
+		if(this.state!=FSM.CHOIX_NB_JOUEUR) text(this.message,825,220);
+		fill(0);
+		textSize(14);
+
 
 		switch (this.state) {
 			case INIT:
@@ -119,7 +125,8 @@ public class MainClass extends PApplet {
 				break;
 		}
 
-		if (caseX != -1 && caseY != -1) text("Case " + caseX + ";" + caseY, 825, 187);
+		textAlign(CENTER,CENTER);
+		if (caseX != -1 && caseY != -1 && this.state!=FSM.INIT && this.state!=FSM.CHOIX_NB_JOUEUR) text("Case " + caseX + ";" + caseY, 325, 660);
 
 
 	}
@@ -166,11 +173,17 @@ public class MainClass extends PApplet {
 			}
 		}
 		if(this.state==FSM.TOUR) {
-			for (int i = 0; i < this.Buttons_Actions.size(); i++) {
-				if (this.Buttons_Actions.get(i).onClick(mouseX, mouseY)) {
+			for(int i=0; i<this.Buttons_Actions.size(); i++){
+				if(this.Buttons_Actions.get(i).onClick(mouseX,mouseY)){
 					System.out.println("\"" + this.Buttons_Actions.get(i).text + "\"" + " est pressé");
-					if (this.Buttons_Actions.get(i).getText().equals("Regles")) {
-						this.wr.setVisible();
+
+				}
+			}
+			for (Button buttons_action : this.Buttons_Actions) {
+				if (buttons_action.onClick(mouseX, mouseY)) {
+					System.out.println("\"" + buttons_action.text + "\"" + " est pressé");
+					if (buttons_action.getText().equals("Regles")) {
+						wr.setVisible();
 					}
 				}
 			}
@@ -242,5 +255,9 @@ public class MainClass extends PApplet {
 		for (Button b : Buttons_Actions) {
 			b.update();
 		}
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
