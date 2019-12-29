@@ -14,9 +14,10 @@ public class Equipe implements JHumain, JIA {
 	protected ArrayList<Navire> listeNavire = new ArrayList<Navire>();
 
 	//Constructeur
-	public Equipe(PApplet sketch, Nature n) {
+	public Equipe(PApplet sketch, Nature n, int id) {
 		this.sketch = sketch;
 		this.myNature = n;
+		this.id = id;
 	}
 
 	//Méthodes

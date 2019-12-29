@@ -18,7 +18,7 @@ public class Plateau {
 		this.matrice = new CasePlateau[this.taille][this.taille];
 		for (int i = 0; i < this.taille; i++) {
 			for (int j = 0; j < this.taille; j++) {
-				this.matrice[i][j] = new CasePlateau(this.sketch, this.tailleCase);
+				this.matrice[i][j] = new CasePlateau(this.sketch, this.tailleCase,i,j);
 			}
 		}
 	}
@@ -54,6 +54,34 @@ public class Plateau {
 
 			}
 		}
+	}
+
+	public void setCrossAtCaseFull(boolean b){
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
+				if(this.getCaseAt(i,j).estPleine()) this.getCaseAt(i,j).setCross(b);
+			}
+		}
+	}
+
+
+	public boolean onClick(int x, int y){
+		if (x>=15 && x<=(15+this.tailleCase*this.taille) && y>=15 && y<=(15+this.tailleCase*this.taille)) {
+			return true;
+		}
+		return false;
+	}
+
+	public int getCaseXOnClick(int x){
+		return (x - 15) / this.getTailleCase();
+	}
+
+	public int getCaseYOnClick(int y){
+		return (y - 15) / this.getTailleCase();
+	}
+
+	public CasePlateau getCaseOnClick(int x,int y){
+		return this.getCaseAt(getCaseXOnClick(x),getCaseYOnClick(y));
 	}
 
 	public int getTailleCase() {

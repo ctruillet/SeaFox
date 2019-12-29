@@ -10,11 +10,17 @@ public class CasePlateau {
 	private ArrayList<Navire> occupants = new ArrayList<Navire>();
 	private int tailleCase;
 	private PApplet sketch;
+	protected int x;
+	protected int y;
+	private boolean isCross;
 
 	//Constructeur
-	public CasePlateau(PApplet sketch, int tailleCase) {
+	public CasePlateau(PApplet sketch, int tailleCase, int x, int y) {
 		this.tailleCase = tailleCase;
 		this.sketch = sketch;
+		this.x=x;
+		this.y=y;
+		this.isCross = false;
 		//ToDo
 	}
 
@@ -61,6 +67,22 @@ public class CasePlateau {
 		this.occupants.remove(n);
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public boolean isCross() {
+		return isCross;
+	}
+
+	public void setCross(boolean cross) {
+		isCross = cross;
+	}
+
 	public void draw(int x, int y) {
 		sketch.stroke(181, 128, 87);
 		sketch.square(x, y, this.tailleCase);
@@ -86,6 +108,11 @@ public class CasePlateau {
 			sketch.tint((n.getNumEq() == 0 ? 255 : (n.getNumEq() == 3 ? 255 : 0)), (n.getNumEq() == 1 ? 255 : (n.getNumEq() == 3 ? 255 : (n.getNumEq() == 2 ? 100 : 0))), (n.getNumEq() == 2 ? 225 : 0));
 			sketch.image(img, x, y);
 			sketch.noTint();
+		}
+
+		if(this.isCross){
+			PImage cross = sketch.loadImage("../doc/cross.png");
+			sketch.image(cross, this.x*this.tailleCase+15, this.y*this.tailleCase+15);
 		}
 	}
 

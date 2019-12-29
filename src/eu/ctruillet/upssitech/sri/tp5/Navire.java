@@ -18,11 +18,11 @@ public abstract class Navire {
 	protected Point position;
 
 	//Constructeur
-	public Navire(PApplet sketch, int i, TypeNav t, int n) {
+	public Navire(PApplet sketch, int id, TypeNav t, int numEq) {
 		this.sketch = sketch;
-		this.id = i;
+		this.id = id;
 		this.myType = t;
-		this.numEq = n;
+		this.numEq = numEq;
 	}
 
 	//Méthodes

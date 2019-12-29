@@ -21,6 +21,7 @@ public class MainClass extends PApplet {
 	protected ArrayList<Button> Buttons_Actions = new ArrayList<>();
 	private PImage baniere;
 	private PImage map;
+	protected boolean selectCase;
 
 	//Methodes
 	public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class MainClass extends PApplet {
 
 		this.state = FSM.CHOIX_NB_JOUEUR;
 
-		j.addNewJoueur(Nature.HUMAIN);
+		//j.addNewJoueur(Nature.HUMAIN);
 	}
 
 	public void settings() {
@@ -98,6 +99,7 @@ public class MainClass extends PApplet {
 
 			case PLACEMENT_BATEAU:
 				j.positionnementNavire();
+				j.getPlateau().setCrossAtCaseFull(true);
 				break;
 
 			case TOUR:
@@ -112,8 +114,6 @@ public class MainClass extends PApplet {
 				break;
 		}
 
-
-
 		if (caseX != -1 && caseY != -1) text("Case " + caseX + ";" + caseY, 825, 187);
 
 
@@ -121,9 +121,24 @@ public class MainClass extends PApplet {
 
 	public void mousePressed() {
 		//Mise à jour de la case où on est
-		if ((mouseX - 15) / j.getPlateau().getTailleCase() <= 9 && (mouseX - 15) >= 0 && (mouseY - 15) / j.getPlateau().getTailleCase() <= 9 && (mouseY - 15) >= 0) {
-			caseX = (mouseX - 15) / j.getPlateau().getTailleCase();
-			caseY = (mouseY - 15) / j.getPlateau().getTailleCase();
+		if(j.getPlateau().onClick(mouseX,mouseY)){
+			caseX = j.getPlateau().getCaseXOnClick(mouseX);
+			caseY = j.getPlateau().getCaseYOnClick(mouseY);
+
+			if(this.state==FSM.PLACEMENT_BATEAU){
+				this.j.addNewBateau(this.j.getTourJoueur(),caseX,caseY);
+
+				//Fin placement bateau ?
+				if(this.j.nbTour==1){
+					this.state=FSM.TOUR;
+					j.getPlateau().setCrossAtCaseFull(false);
+				}
+
+			}
+
+
+			//j.getPlateau().getCaseOnClick(mouseX,mouseY).setCross(!j.getPlateau().getCaseOnClick(mouseX,mouseY).isCross());
+
 		}
 
 		if(this.state==FSM.CHOIX_NB_JOUEUR) {
