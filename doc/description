@@ -1,8 +1,6 @@
 TP Final POO
 
 Bataille navale : Jeu composé de 3 équipes + 1 IA
-	-> 2 eq militaires
-	-> 1 eq neutre
 	-> 1 plateau de jeu pour visualiser les mouvements
 
 Chaque équipe est composée de plusieurs bateaux
@@ -16,12 +14,14 @@ TIR & DEPLACEMENT :
 		-> 1 filets de peche (esquive 15%)
 		-> 3 cases/tour
 		-> Pecher
-	-> Destroyer (2 vies)
-		-> Tir à 2 cases (20*2 ATK)
+	-> Destroyer (1 vie)
+		-> Tir à 2 cases
 		-> 2 cases/tour
 	-> Sous-Marin (1 vie)
 		-> Tir à 3 cases
 		-> Soit attaque, soit se deplace (2 cases/tour)
+
+	-> Un tir sur une case touche tout les bateaux de la case
 
 POINTS (calculés par tours) :
 	-> Chalutier  en vie : 			 5pts  *1.5/(nbJoueur-1)
@@ -32,21 +32,7 @@ POINTS (calculés par tours) :
 	-> Destruction Sous-Marin : 	 45pts *1.5/(nbJoueur-1)
 	-> Destruction Equipe : 		200pts *1.5/(nbJoueur-1)
 
-FIN à 420pts
+FIN à 420pts OU Mort d'une équipe
 
-1 IA parmi les 3 joueurs. Les autres joueurs sont les humains qui tapent leurs commades en ligne.
-Fin du jeu = 1 équipe detruite -> gagnant (celui qui a le plus de points
-
-CLASSES
--> Plateau
-	-> Case
--> Bateau (abstract)
-	-> Chalutier (1 cases)
-	-> Destroyer (2 cases)
-	-> Sous-marin (3 cases)
--> Joueur
--> Type d'Action
-
-Diagramme UML sur le support de cours
-
-
+1 IA parmi les 3 joueurs. Les autres joueurs sont les humains qui tapent leurs commandes en ligne.
+Fin du jeu = 1 équipe detruite -> gagnant (celui qui a le plus de points)

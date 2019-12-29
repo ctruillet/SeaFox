@@ -98,8 +98,13 @@ public class MainClass extends PApplet {
 				break;
 
 			case PLACEMENT_BATEAU:
-				j.positionnementNavire();
+				j.creationJoueurs();
 				j.getPlateau().setCrossAtCaseFull(true);
+				//Fin placement bateau ?
+				if(this.j.nbTour==1){
+					this.state=FSM.TOUR;
+					j.getPlateau().setCrossAtCaseFull(false);
+				}
 				break;
 
 			case TOUR:
@@ -238,7 +243,4 @@ public class MainClass extends PApplet {
 			b.update();
 		}
 	}
-
-
-
 }

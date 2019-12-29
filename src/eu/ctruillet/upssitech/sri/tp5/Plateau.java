@@ -64,6 +64,19 @@ public class Plateau {
 		}
 	}
 
+	/**
+	 * Affiche (b=true) une croix sur la case si elle ne peut pas acceuillir le navire n
+	 * @param type
+	 * @param b
+	 */
+	public void setCrossIfICantAdd(TypeNav type, boolean b){
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
+				if(!this.getCaseAt(i,j).canIAdd(type)) this.getCaseAt(i,j).setCross(b);
+			}
+		}
+	}
+
 
 	public boolean onClick(int x, int y){
 		if (x>=15 && x<=(15+this.tailleCase*this.taille) && y>=15 && y<=(15+this.tailleCase*this.taille)) {

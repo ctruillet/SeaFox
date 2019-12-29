@@ -1,6 +1,7 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.util.ArrayList;
 
@@ -20,8 +21,8 @@ public class Jeu {
 		this.plateau = new Plateau(this.sketch, taille);
 		this.listeJoueur = new ArrayList<Joueur>();
 		this.fini = false;
-		this.tourJoueur=0; //On va du Joueur 0 à Joueur n-1 (n maximum 4)
-		this.nbTour=0;
+		this.tourJoueur = 0; //On va du Joueur 0 à Joueur n-1 (n maximum 4)
+		this.nbTour = 0;
 	}
 
 	//Méthodes
@@ -40,28 +41,42 @@ public class Jeu {
 	}
 
 	public String toString() {
-		//ToDO
-		return "";
+		return "Jeu{" +
+				"fini=" + fini +
+				", tourJoueur=" + tourJoueur +
+				", nbTour=" + nbTour +
+				", nbJoueur=" + nbJoueur +
+				'}';
 	}
 
 	public void attributionNavire() {
 		//ToDO
 	}
 
-	public void positionnementNavire() {
-		if(this.nbJoueur!=this.listeJoueur.size()){
+	/**
+	 * Crée les joueurs
+	 */
+	public void creationJoueurs() {
+		if (this.nbJoueur != this.listeJoueur.size()) {
 			Equipe e;
 			//Joueurs Humains
-			for(int i=0; i<this.nbJoueur-1; i++){
-				e = new Equipe(this.sketch, Nature.HUMAIN, i);
-				this.listeJoueur.add(e);
-				System.out.println("Ajout du joueur n°" + i + " (HUMAIN)");
+			for (int i = 0; i < this.nbJoueur - 1; i++) {
+				addNewJoueur(Nature.HUMAIN,i);
 			}
 			//Joueur IA
-			e = new Equipe(this.sketch, Nature.HUMAIN, this.nbJoueur);
-			this.listeJoueur.add(e);
-			System.out.println("Ajout du joueur n°" + this.nbJoueur + " (IA)");
+			addNewJoueur(Nature.IA,this.nbJoueur - 1);
 		}
+	}
+
+	/**
+	 * Ajoute un nouveau joueur
+	 * @param n
+	 * @param id
+	 */
+	public void addNewJoueur(Nature n, int id) {
+		Equipe e = new Equipe(this.sketch, Nature.HUMAIN, id);
+		this.listeJoueur.add(e);
+		System.out.println("Ajout du joueur n°" + id + " (" + n + ")");
 	}
 
 	private void majJeuAvCommande(Commande cmd) {
@@ -89,40 +104,80 @@ public class Jeu {
 		return this.plateau;
 	}
 
-	public void addNewJoueur(Nature n, int id) {
+	public boolean addNewBateauAt(Navire n, int caseX, int caseY) {
+		if (this.plateau.getCaseAt(caseX, caseY).canIAdd(n.getType())) {
+			this.listeJoueur.get(n.getNumEq()).addNavire(n);
+			this.plateau.getCaseAt(caseX, caseY).addOccupant(n);
+			System.out.println("Le " + n.getType() + " du Joueur " + n.getNumEq() + " a été placé sur la case " + caseX + ";" + caseY);
 
+			return true;
+		}
+		return false;
 	}
 
-	public void addNewBateau(int nbEq, int caseX, int caseY){
+	public void addNewBateau(int nbEq, int caseX, int caseY) {
 		Navire n;
 
-		if(this.plateau.getCaseAt(caseX,caseY).estPleine()) return;
+		//La case est pleine
+		if (this.plateau.getCaseAt(caseX, caseY).estPleine()) return;
 
-		if(this.listeJoueur.get(nbEq).getListeNavire().size()==0){ 			//Ajout Chalutier
-			n = new Chalutier(sketch,0,nbEq);
-			this.listeJoueur.get(nbEq).addNavire(n);
-			this.plateau.getCaseAt(caseX,caseY).addOccupant(n);
 
-		}else if (this.listeJoueur.get(nbEq).getListeNavire().size()==1){	//Ajout Destroyer
-			n = new Destroyer(sketch,1,nbEq);
-			this.listeJoueur.get(nbEq).addNavire(n);
-			this.plateau.getCaseAt(caseX,caseY).addOccupant(n);
+		if (nbEq == this.nbJoueur - 1) { //Placements bateaux de l'IA
+			n = new Chalutier(sketch, 0, nbEq);
+			while (!addNewBateauAt(n, (int) (Math.random() * (10)), (int) (Math.random() * (10)))) ;
 
-		}else if (this.listeJoueur.get(nbEq).getListeNavire().size()==2){	//Ajout Sous Marin
-			n = new SousMarin(sketch,2,nbEq);
-			this.listeJoueur.get(nbEq).addNavire(n);
-			this.plateau.getCaseAt(caseX,caseY).addOccupant(n);
 
-		}else if (this.listeJoueur.get(nbEq).getListeNavire().size()==3){ 	//On passe au joueur suivant
+			n = new Destroyer(sketch, 1, nbEq);
+			while (!addNewBateauAt(n, (int) (Math.random() * (10)), (int) (Math.random() * (10)))) ;
+
+			n = new SousMarin(sketch, 2, nbEq);
+			while (!addNewBateauAt(n, (int) (Math.random() * (10)), (int) (Math.random() * (10)))) ;
+
+			this.getPlateau().setCrossIfICantAdd(TypeNav.CHALUTIER, false);
+			this.getPlateau().setCrossIfICantAdd(TypeNav.DESTROYER, false);
+			this.getPlateau().setCrossIfICantAdd(TypeNav.SOUSMARIN, false);
 			this.nextTurn();
-			if(this.nbTour!=1) this.addNewBateau(this.getTourJoueur(),caseX,caseY);
+
+
+		} else {
+			if (this.listeJoueur.get(nbEq).getListeNavire().size() == 0) {            //Ajout Chalutier
+				this.getPlateau().setCrossIfICantAdd(TypeNav.CHALUTIER, false);
+
+				n = new Chalutier(sketch, 0, nbEq);
+				addNewBateauAt(n, caseX, caseY);
+
+				this.getPlateau().setCrossIfICantAdd(TypeNav.DESTROYER, true);
+
+			} else if (this.listeJoueur.get(nbEq).getListeNavire().size() == 1) {    //Ajout Destroyer
+				this.getPlateau().setCrossIfICantAdd(TypeNav.DESTROYER, false);
+
+				n = new Destroyer(sketch, 1, nbEq);
+				addNewBateauAt(n, caseX, caseY);
+
+				this.getPlateau().setCrossIfICantAdd(TypeNav.SOUSMARIN, true);
+
+			} else {    //Ajout Sous Marin
+				this.getPlateau().setCrossIfICantAdd(TypeNav.SOUSMARIN, false);
+
+				n = new SousMarin(sketch, 2, nbEq);
+				addNewBateauAt(n, caseX, caseY);
+
+				this.getPlateau().setCrossIfICantAdd(TypeNav.CHALUTIER, true);
+
+				//On passe au joueur suivant
+				this.nextTurn();
+				if (nbEq == this.nbJoueur - 2) this.addNewBateau(this.getTourJoueur(), caseX, caseY);
+
+			}
 
 		}
 	}
 
-	public void nextTurn(){
-		if(this.tourJoueur+1>=this.nbJoueur) this.nbTour++;
-		this.tourJoueur=(this.tourJoueur+1)%this.nbJoueur;
+	public void nextTurn() {
+		if (this.tourJoueur + 1 >= this.nbJoueur) {
+			this.nbTour++;
+		}
+		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
 
 	}
 

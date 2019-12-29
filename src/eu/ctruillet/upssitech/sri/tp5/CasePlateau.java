@@ -30,12 +30,9 @@ public class CasePlateau {
 	}
 
 	public void addOccupant(Navire occupant) {
-		for(Navire n : this.occupants){
-			if(occupant.getType() == n.getType()){
-				return;
-			}
+		if(canIAdd(occupant.getType())){
+			this.occupants.add(occupant);
 		}
-		this.occupants.add(occupant);
 	}
 
 	public String toString() {
@@ -49,6 +46,17 @@ public class CasePlateau {
 
 	public boolean estVide() {
 		return this.occupants.isEmpty();
+	}
+
+	public boolean canIAdd(TypeNav type){
+		for(Navire n: this.occupants){
+			if(n.getType() == TypeNav.SOUSMARIN){
+				if(type==TypeNav.SOUSMARIN) return false;
+			}else{
+				if(type==TypeNav.DESTROYER || type==TypeNav.CHALUTIER) return false;
+			}
+		}
+		return true;
 	}
 
 	public boolean estPleine() {
