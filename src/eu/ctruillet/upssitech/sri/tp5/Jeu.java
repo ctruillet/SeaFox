@@ -8,8 +8,8 @@ public class Jeu {
 	//Attribut
 	private PApplet sketch;
 	private Plateau plateau;
-	private ArrayList<Joueur> listeJoueur;
-	private boolean fini = false;
+	protected ArrayList<Equipe> listeJoueur;
+	protected boolean fini = false;
 	private String message;
 	private int tourJoueur;
 	int nbTour;
@@ -22,7 +22,7 @@ public class Jeu {
 		this.listeJoueur = new ArrayList<>();
 		this.tourJoueur = 0; //On va du Joueur 0 à Joueur n-1 (n maximum 4)
 		this.nbTour = 0;
-		this.message = "Joueur 1, c'est à vous!";
+		this.message = "Joueur rouge, c'est à vous!";
 
 	}
 
@@ -75,9 +75,10 @@ public class Jeu {
 	 * @param id
 	 */
 	private void addNewJoueur(Nature n, int id) {
-		Equipe e = new Equipe(this.sketch, Nature.HUMAIN, id);
+		Equipe e = new Equipe(this.sketch, n, id);
 		this.listeJoueur.add(e);
 		System.out.println("Ajout du joueur n°" + id + " (" + n + ")");
+		System.out.println(this.listeJoueur);
 	}
 
 	private void majJeuAvCommande(Commande cmd) {
@@ -190,13 +191,18 @@ public class Jeu {
 		}
 	}
 
-	private void nextTurn() {
+	protected void nextTurn() {
+		for(Navire n : this.listeJoueur.get(this.getTourJoueur()).getListeNavire()){
+			n.update();
+		}
+
 		if (this.tourJoueur + 1 >= this.nbJoueur) {
 			this.nbTour++;
 		}
 		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
 
-		this.setMessage("Joueur "+ (this.tourJoueur+1) +", c'est à vous !");
+		this.setMessage("Joueur "+ (this.tourJoueur == 0 ? "rouge" : (this.tourJoueur == 1 ? "vert" : (this.tourJoueur == 2 ? "bleu" : (this.tourJoueur == 3 ? "jaune" : "???")))) +", c'est à vous !");
+		System.out.println(this.listeJoueur.get(this.getTourJoueur()).toString());
 
 	}
 

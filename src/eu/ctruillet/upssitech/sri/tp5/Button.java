@@ -58,6 +58,17 @@ class Button {
 		this.update();
 	}
 
+	@Override
+	public String toString() {
+		return "Button{" +
+				"x=" + x +
+				", y=" + y +
+				", l=" + l +
+				", text='" + text + '\'' +
+				", isClicked=" + isClicked +
+				'}';
+	}
+
 	public boolean onClick(int x, int y) {
 		if (containsPoint(forme, x - this.x, y - this.y)) {
 			this.isClicked = true;

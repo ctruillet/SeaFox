@@ -32,6 +32,7 @@ public class CasePlateau {
 	public void addOccupant(Navire occupant) {
 		if(canIAdd(occupant.getType())){
 			this.occupants.add(occupant);
+			occupant.setPosition(x,y);
 		}
 	}
 
@@ -98,7 +99,22 @@ public class CasePlateau {
 		isCross = cross;
 	}
 
+	/**
+	 * Update des occupants de la case
+	 */
+	public void update(){
+		for(int i=0; i<this.getOccupants().size(); i++){
+			if(this.getOccupants().get(i).position.getX() != this.x && this.getOccupants().get(i).position.getY() != this.y){
+				this.removeOccupant(this.getOccupants().get(i));
+			}
+			if(this.getOccupants().get(i).estCoule()){
+				this.removeOccupant(this.getOccupants().get(i));
+			}
+		}
+	}
+
 	public void draw(int x, int y) {
+		this.update();
 		sketch.stroke(181, 128, 87);
 		sketch.square(x, y, this.tailleCase);
 		for (Navire n : this.getOccupants()) {

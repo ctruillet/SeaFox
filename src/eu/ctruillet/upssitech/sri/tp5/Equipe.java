@@ -32,6 +32,15 @@ public class Equipe implements JHumain, JIA {
 	}
 
 	@Override
+	public String toString() {
+		return "Equipe{" +
+				"myNature=" + myNature +
+				", id=" + id +
+				", listeNavire=" + listeNavire +
+				'}';
+	}
+
+	@Override
 	public Commande getCommande() {
 		return this.myCommande;
 	}

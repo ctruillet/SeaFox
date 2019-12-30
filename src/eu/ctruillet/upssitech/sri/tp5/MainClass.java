@@ -1,6 +1,7 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ public class MainClass extends PApplet {
 	public static WindowsRules wr = new WindowsRules();
 	protected final static String ICON = "../doc/icon.png";
 	protected final static String TITLE = "SeaFox";
+	protected PFont fontNormal, fontBold;
 
 	protected int caseX = -1, caseY = -1;
 	protected FSM state;
@@ -35,6 +37,9 @@ public class MainClass extends PApplet {
 		changeAppTitle();
 		changeAppIcon(loadImage(ICON));
 		surface.setResizable(false);
+
+		fontNormal = createFont("Arial", 14);
+		fontBold   = createFont("Arial Bold", 20);
 
 
 		this.state = FSM.INIT;
@@ -90,7 +95,7 @@ public class MainClass extends PApplet {
 		fill((new Color(189, 74, 35)).getRGB());
 		textSize(20);
 		this.message = j.getMessage();
-		if(this.state!=FSM.CHOIX_NB_JOUEUR) text(this.message,825,220);
+		if(this.state!=FSM.CHOIX_NB_JOUEUR) text(this.message,825,210);
 		fill(0);
 		textSize(14);
 
@@ -106,6 +111,13 @@ public class MainClass extends PApplet {
 			case PLACEMENT_BATEAU:
 				j.creationJoueurs();
 				j.getPlateau().setCrossAtCaseFull(true);
+
+				textFont(fontBold);
+				fill((new Color(119, 223, 254)).getRGB());
+				text("PLACEMENT DES BATEAUX\nChalutier -> Destroyer -> Sous-Marin",325,700);
+				fill(0);
+				textFont(fontNormal);
+
 				//Fin placement bateau ?
 				if(this.j.nbTour==1){
 					this.state=FSM.TOUR;
@@ -115,6 +127,13 @@ public class MainClass extends PApplet {
 
 			case TOUR:
 				displayActionButtons();
+				for(Navire n : j.listeJoueur.get(j.getTourJoueur()).getListeNavire()){
+					if(n.estValide()){
+						n.afficher();
+						displayActionButtons(n);
+					}
+				}
+
 				break;
 
 			case FIN:
@@ -126,7 +145,7 @@ public class MainClass extends PApplet {
 		}
 
 		textAlign(CENTER,CENTER);
-		if (caseX != -1 && caseY != -1 && this.state!=FSM.INIT && this.state!=FSM.CHOIX_NB_JOUEUR) text("Case " + caseX + ";" + caseY, 325, 660);
+		if (caseX != -1 && caseY != -1 && this.state!=FSM.INIT && this.state!=FSM.CHOIX_NB_JOUEUR) text("Case " + caseX + ";" + caseY, 600, 770);
 
 
 	}
@@ -147,10 +166,6 @@ public class MainClass extends PApplet {
 				}
 
 			}
-
-
-			//j.getPlateau().getCaseOnClick(mouseX,mouseY).setCross(!j.getPlateau().getCaseOnClick(mouseX,mouseY).isCross());
-
 		}
 
 		if(this.state==FSM.CHOIX_NB_JOUEUR) {
@@ -174,16 +189,57 @@ public class MainClass extends PApplet {
 		}
 		if(this.state==FSM.TOUR) {
 			for(int i=0; i<this.Buttons_Actions.size(); i++){
-				if(this.Buttons_Actions.get(i).onClick(mouseX,mouseY)){
+				if(this.Buttons_Actions.get(i).onClick(mouseX,mouseY)) {
 					System.out.println("\"" + this.Buttons_Actions.get(i).text + "\"" + " est pressé");
 
-				}
-			}
-			for (Button buttons_action : this.Buttons_Actions) {
-				if (buttons_action.onClick(mouseX, mouseY)) {
-					System.out.println("\"" + buttons_action.text + "\"" + " est pressé");
-					if (buttons_action.getText().equals("Regles")) {
-						wr.setVisible();
+					switch (i){
+						case 0: //Attaquer - CHALUTIER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setPeutAttaquer(false);
+							break;
+
+						case 1: //Se Deplacer - CHALUTIER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setPeutSeDeplacer(false);
+							break;
+
+						case 2: //Saborder - CHALUTIER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setCoule();
+							break;
+
+						case 3:	//Attaquer - DESTROYER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutAttaquer(false);
+							break;
+
+						case 4:	//Se Deplacer - DESTROYER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutSeDeplacer(false);
+							break;
+
+						case 5: //Saborder - DESTROYER
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setCoule();
+							break;
+
+						case 6: //Attaquer - SOUSMARIN
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
+							break;
+
+						case 7: //Se Deplacer - SOUSMARIN
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
+							break;
+
+						case 8: //Saborder - SOUSMARIN
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setCoule();
+							break;
+
+						case 9: //FIN DE TOUR
+							j.nextTurn();
+							break;
+
+						case 10: //Regles
+							wr.setVisible();
+							break;
+
+
 					}
 				}
 			}
@@ -220,21 +276,27 @@ public class MainClass extends PApplet {
 		Button b;
 
 		//Actions du Chalutier
-		b = new Button(this, 760, 300, 60, "Attaquer");
+		b = new Button(this, 730, 292, 50, "Attaquer");
 		Buttons_Actions.add(b);
-		b = new Button(this, 890, 300, 60, "Deplacer");
+		b = new Button(this, 825, 292, 50, "Deplacer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 920, 292, 50, "Saborder");
 		Buttons_Actions.add(b);
 
 		//Actions du Destroyer
-		b = new Button(this, 760, 420, 60, "Attaquer");
+		b = new Button(this, 730, 412, 50, "Attaquer");
 		Buttons_Actions.add(b);
-		b = new Button(this, 890, 420, 60, "Deplacer");
+		b = new Button(this, 825, 412, 50, "Deplacer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 920, 412, 50, "Saborder");
 		Buttons_Actions.add(b);
 
 		//Actions du SousMarin
-		b = new Button(this, 760, 540, 60, "Attaquer");
+		b = new Button(this, 730, 532, 50, "Attaquer");
 		Buttons_Actions.add(b);
-		b = new Button(this, 890, 540, 60, "Deplacer");
+		b = new Button(this, 825, 532, 50, "Deplacer");
+		Buttons_Actions.add(b);
+		b = new Button(this, 920, 532, 50, "Saborder");
 		Buttons_Actions.add(b);
 
 		//Actions Génerales
@@ -252,8 +314,32 @@ public class MainClass extends PApplet {
 	}
 
 	protected void displayActionButtons(){
-		for (Button b : Buttons_Actions) {
-			b.update();
+		Buttons_Actions.get(9).update();
+		Buttons_Actions.get(10).update();
+	}
+
+	protected void displayActionButtons(Navire n){
+		//Si le navire n'a plus de vie
+		if(n.getEtat()<=0) return;
+
+		switch(n.getType()){
+			case CHALUTIER:
+				if(n.isPeutAttaquer()) Buttons_Actions.get(0).update();
+				if(n.isPeutSeDeplacer()) Buttons_Actions.get(1).update();
+				if(n.estValide()) Buttons_Actions.get(2).update();
+				break;
+
+			case DESTROYER:
+				if(n.isPeutAttaquer()) Buttons_Actions.get(3).update();
+				if(n.isPeutSeDeplacer()) Buttons_Actions.get(4).update();
+				if(n.estValide()) Buttons_Actions.get(5).update();
+				break;
+			case SOUSMARIN:
+				if(n.isPeutAttaquer()) Buttons_Actions.get(6).update();
+				if(n.isPeutSeDeplacer()) Buttons_Actions.get(7).update();
+				if(n.estValide()) Buttons_Actions.get(8).update();
+				break;
+
 		}
 	}
 
