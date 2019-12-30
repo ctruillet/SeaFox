@@ -1,4 +1,4 @@
-![SeaFox](./doc/baniere.png)
+![SeaFox](ressources/icons/baniere.png)
 
 Welcome in the **MOST** **EPIC** battle sea **GAME**.
 

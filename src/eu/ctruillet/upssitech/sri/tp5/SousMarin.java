@@ -17,7 +17,7 @@ public class SousMarin extends Navire {
 	@Override
 	public void afficher() {
 		sketch.tint((this.getNumEq() == 0 ? 255 : (this.getNumEq() == 3 ? 255 : 0)), (this.getNumEq() == 1 ? 255 : (this.getNumEq() == 3 ? 255 : (this.getNumEq() == 2 ? 100 : 0))), (this.getNumEq() == 2 ? 225 : 0));
-		sketch.image(sketch.loadImage("../doc/sousmarin_32x32.png"), 665, 473);
+		sketch.image(sketch.loadImage("icons/sousmarin_32x32.png"), 665, 473);
 
 		sketch.textAlign(sketch.LEFT);
 		sketch.textSize(20);

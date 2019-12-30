@@ -14,7 +14,7 @@ public class WindowsRules extends PApplet {
 	}
 
 	public void settings(){
-		size(200,500);
+		size(320,640);
 
 	}
 
@@ -25,7 +25,7 @@ public class WindowsRules extends PApplet {
 	}
 
 	public void draw(){
-
+		this.image(this.loadImage("icons/rules.png"),0,0);
 	}
 
 	public void setVisible() {

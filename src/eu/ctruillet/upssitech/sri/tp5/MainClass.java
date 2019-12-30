@@ -11,7 +11,7 @@ public class MainClass extends PApplet {
 	//Attributs
 	public static PApplet processing;
 	public static WindowsRules wr = new WindowsRules();
-	protected final static String ICON = "../doc/icon.png";
+	protected final static String ICON = "icons/icon.png";
 	protected final static String TITLE = "SeaFox";
 	protected PFont fontNormal, fontBold;
 
@@ -53,8 +53,8 @@ public class MainClass extends PApplet {
 	}
 
 	public void settings() {
-		baniere = loadImage("../doc/baniere.png");
-		map = loadImage("../doc/map.png");
+		baniere = loadImage("icons/baniere.png");
+		map = loadImage("icons/map.png");
 		size(1000, 800);
 	}
 
