@@ -1,13 +1,14 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="SeaFox">
     <output-path>$PROJECT_DIR$/../SeaFox</output-path>
-    <root id="archive" name="SeaFox.jar">
+    <root id="archive" name="TP5.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/ressources/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/ressources/icons/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="TP5" />
       <element id="extracted-dir" path="$USER_HOME$/Desktop/processing-3.5.3/core/library/core.jar" path-in-jar="/" />
       <element id="module-source" name="TP5" />
+      <element id="dir-copy" path="$PROJECT_DIR$" />
     </root>
   </artifact>
 </component>
