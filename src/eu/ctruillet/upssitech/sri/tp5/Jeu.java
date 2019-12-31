@@ -222,14 +222,24 @@ public class Jeu {
 			n.update();
 		}
 
+		System.out.println(this.listeJoueur.get(this.getTourJoueur()).toString());
+
 		if (this.tourJoueur + 1 >= this.nbJoueur) {
 			this.nbTour++;
 		}
 		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
 
-		this.setMessage("Joueur "+ (this.tourJoueur == 0 ? "rouge" : (this.tourJoueur == 1 ? "vert" : (this.tourJoueur == 2 ? "bleu" : (this.tourJoueur == 3 ? "jaune" : "???")))) +", c'est à vous !");
-		System.out.println(this.listeJoueur.get(this.getTourJoueur()).toString());
+		if( this.nbTour >= 1 && this.listeJoueur.get(this.getTourJoueur()).getMyNature()==Nature.IA){ //Tour de l'IA
+			this.setMessage("Tour de l'IA");
 
+			//on joue
+			this.jouerIA();
+
+			//Tour suivant
+			this.nextTurn();
+		}else{
+			this.setMessage("Joueur "+ (this.tourJoueur == 0 ? "rouge" : (this.tourJoueur == 1 ? "vert" : (this.tourJoueur == 2 ? "bleu" : "jaune"))) +", c'est à vous !");
+		}
 	}
 
 	public int getTourJoueur() {
@@ -251,4 +261,64 @@ public class Jeu {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	private void jouerIA(){
+		double random;
+		int x=-1, y=-1;
+
+		for(Navire n : this.listeJoueur.get(this.getTourJoueur()).getListeNavire()){
+			if(n.estValide()){
+				random = Math.random()*100;
+
+				if(random<=49){ //On attaque
+					System.out.println("Tentative d'attaque du "+n.getType());
+					attaqueIA(n);
+
+				}else if(random<=99){ //On Bouge
+					System.out.println("Tentative de deplacement du "+n.getType());
+					deplacementIA(n);
+
+
+				}else{ //on saborde
+					System.out.println("Suicide du "+n.getType()+" sur la case "+x+";"+y);
+					n.setCoule();
+				}
+			}
+
+		}
+	}
+
+	private void attaqueIA(Navire n){
+		double random;
+		for(int i=0; i<this.getPlateau().getTaille(); i++){
+			for(int j=0; j<this.getPlateau().getTaille(); j++){
+				if(n.isTirIsOK(i,j) && this.getPlateau().getCaseAt(i,j).estOccupee() && i!=(int)n.getPosition().getX() && j!=(int)n.getPosition().getY()){
+					random = Math.random()*2;
+					if(random<=55){
+						this.attaque(i,j);
+						System.out.println("\tAttaque du "+n.getType()+" sur la case "+i+";"+j);
+
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	private void deplacementIA(Navire n){
+		double random;
+		int x=-1, y=-1;
+
+		for(int i=0; i<10; i++){
+			x = (int)(Math.random()*9);
+			y = (int)(Math.random()*9);
+			System.out.println("\t\tCase "+x+";"+y);
+			if(n.isDeplacementIsOK(x,y)){
+				this.deplacer(n,x,y);
+				System.out.println("\tDeplacement du "+n.getType()+" sur la case "+x+";"+y);
+				return ;
+			}
+		}
+	}
+
 }

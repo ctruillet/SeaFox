@@ -38,7 +38,7 @@ public class Equipe implements JHumain, JIA {
 	@Override
 	public String toString() {
 		return "Equipe{" +
-				"myNature=" + myNature +
+				"myNature=" + (myNature==Nature.HUMAIN ? "HUMAIN" : "IA    ") +
 				", id=" + id +
 				", listeNavire=" + listeNavire +
 				'}';
@@ -70,5 +70,9 @@ public class Equipe implements JHumain, JIA {
 	@Override
 	public int getID() {
 		return this.id;
+	}
+
+	public Nature getMyNature() {
+		return myNature;
 	}
 }

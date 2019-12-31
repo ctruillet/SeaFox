@@ -94,6 +94,7 @@ public abstract class Navire {
 	}
 
 	public boolean isDeplacementIsOK(int x, int y){
+		if(x<0 || x>9 || y<0 || y>9) return false;
 		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
 		if(d <= this.getVitesse() && MainClass.j.getPlateau().getCaseAt(x,y).canIAdd(this.getType())){
 			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());

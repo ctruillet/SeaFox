@@ -445,10 +445,25 @@ public class MainClass extends PApplet {
 							break;
 
 						case 9: //FIN DE TOUR
+
+							//On attend une action
 							this.setActionEnCours(Action.ATTENTE);
+
+							//On enleve les croix
 							this.j.getPlateau().removeAllCross();
-							//TODO : Remettre les boutons à leurs état d'origine
+
+							//On remet les boutons à leurs état d'origine
+							this.Buttons_Actions.get(0).setText("Attaquer");
+							this.Buttons_Actions.get(1).setText("Se Deplacer");
+							this.Buttons_Actions.get(3).setText("Attaquer");
+							this.Buttons_Actions.get(4).setText("Se Deplacer");
+							this.Buttons_Actions.get(6).setText("Attaquer");
+							this.Buttons_Actions.get(7).setText("Se Deplacer");
+
+							//Jeu fini ?
 							if(this.j.isFini()) this.state = FSM.FIN;
+
+							//Tour suivant
 							j.nextTurn();
 							break;
 
@@ -570,5 +585,9 @@ public class MainClass extends PApplet {
 
 	public void setActionEnCours(Action actionEnCours) {
 		this.actionEnCours = actionEnCours;
+	}
+
+	public FSM getState() {
+		return state;
 	}
 }
