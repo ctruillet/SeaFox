@@ -36,6 +36,12 @@ public class CasePlateau {
 		}
 	}
 
+	public void attaque(){
+		for(Navire n : this.getOccupants()){
+			n.setDegat();
+		}
+	}
+
 	public boolean estOccupee() {
 		return !this.occupants.isEmpty();
 	}
@@ -118,15 +124,15 @@ public class CasePlateau {
 		sketch.stroke(181, 128, 87);
 		sketch.square(x, y, this.tailleCase);
 		for (Navire n : this.getOccupants()) {
-			PImage img = sketch.loadImage("icons/default.png");
+			PImage img = sketch.loadImage("ressources/icons/default.png");
 			if (n.getType() == TypeNav.SOUSMARIN) {
-				img = sketch.loadImage("icons/sousmarin.png");
+				img = sketch.loadImage("ressources/icons/sousmarin.png");
 			}
 			if (n.getType() == TypeNav.DESTROYER) {
-				img = sketch.loadImage("icons/destroyer.png");
+				img = sketch.loadImage("ressources/icons/destroyer.png");
 			}
 			if (n.getType() == TypeNav.CHALUTIER) {
-				img = sketch.loadImage("icons/chalutier.png");
+				img = sketch.loadImage("ressources/icons/chalutier.png");
 			}
 
 			//Teinte de couleur suivant l'équipe
@@ -142,7 +148,7 @@ public class CasePlateau {
 		}
 
 		if(this.isCross){
-			PImage cross = sketch.loadImage("icons/cross.png");
+			PImage cross = sketch.loadImage("ressources/icons/cross.png");
 			sketch.image(cross, this.x*this.tailleCase+15, this.y*this.tailleCase+15);
 		}
 	}

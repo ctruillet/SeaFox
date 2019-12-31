@@ -22,6 +22,7 @@ TIR & DEPLACEMENT :
 		-> Soit attaque, soit se deplace (2 cases/tour)
 
 	-> Un tir sur une case touche tout les bateaux de la case
+    -> SABORDER le navire ne demande pas de confirmation
 
 POINTS (calculés par tours) :
 	-> Chalutier  en vie : 			 5pts  *1.5/(nbJoueur-1)

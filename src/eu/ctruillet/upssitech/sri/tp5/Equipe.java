@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Equipe implements JHumain, JIA {
 	//Attributs
-	private Statut myStatut;
 	private PApplet sketch;
 	private Nature myNature;
 	int id;
@@ -43,11 +42,6 @@ public class Equipe implements JHumain, JIA {
 	@Override
 	public Commande getCommande() {
 		return this.myCommande;
-	}
-
-	@Override
-	public Statut getStatut() {
-		return this.myStatut;
 	}
 
 	@Override

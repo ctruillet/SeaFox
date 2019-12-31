@@ -14,7 +14,7 @@ public class Chalutier extends Navire {
 
 	public void afficher(){
 		sketch.tint((this.getNumEq() == 0 ? 255 : (this.getNumEq() == 3 ? 255 : 0)), (this.getNumEq() == 1 ? 255 : (this.getNumEq() == 3 ? 255 : (this.getNumEq() == 2 ? 100 : 0))), (this.getNumEq() == 2 ? 225 : 0));
-		sketch.image(sketch.loadImage("icons/chalutier_32x32.png"), 665, 233);
+		sketch.image(sketch.loadImage("ressources/icons/chalutier_32x32.png"), 665, 233);
 
 		sketch.textAlign(sketch.LEFT);
 		sketch.textSize(20);

@@ -85,8 +85,19 @@ public class Jeu {
 		//ToDO
 	}
 
-	private void majJeuCasTir(Commande cmd) {
-		//ToDO
+	protected void majPlateauCasTir(Navire n, boolean b) {
+
+		for (int i = 0; i < this.getPlateau().getTaille(); i++) {
+			for (int j = 0; j < this.getPlateau().getTaille(); j++) {
+				if(!n.isTirIsOK(i,j)){
+					this.getPlateau().getCaseAt(i,j).setCross(b);
+				}
+			}
+		}
+	}
+
+	public void attaque(int x, int y){
+		this.getPlateau().getCaseAt(x,y).attaque();
 	}
 
 	private void majJeuCasPeche(Commande cmd) {

@@ -86,6 +86,15 @@ public abstract class Navire {
 		//ToDo
 	}
 
+	public boolean isTirIsOK(int x, int y){
+		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
+		if(d <= this.getPortee()){
+			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
+			return true;
+		}
+		return false;
+	}
+
 	public int getPortee() {
 		return portee;
 	}
