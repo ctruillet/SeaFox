@@ -11,6 +11,7 @@ public class Equipe implements JHumain, JIA {
 	int id;
 	private Commande myCommande;
 	private ArrayList<Navire> listeNavire = new ArrayList<>();
+	protected int etat;
 
 	//Constructeur
 	public Equipe(PApplet sketch, Nature n, int id) {
@@ -20,6 +21,10 @@ public class Equipe implements JHumain, JIA {
 	}
 
 	//Méthodes
+	public int getEtat() {
+		return etat;
+	}
+
 	@Override
 	public void interrogationParClavier() {
 		//ToDo
@@ -47,6 +52,14 @@ public class Equipe implements JHumain, JIA {
 	@Override
 	public void addNavire(Navire nav) {
 		this.listeNavire.add(nav);
+		this.etat+=nav.getEtat();
+	}
+
+	public void majEtat(){
+		this.etat = 0;
+		for(Navire n : this.getListeNavire()){
+			this.etat+=n.getEtat();
+		}
 	}
 
 	@Override

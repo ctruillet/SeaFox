@@ -10,6 +10,7 @@ public class Destroyer extends Navire {
 		super(sketch, i, TypeNav.DESTROYER, n);
 		this.etat = 2;
 		this.portee=2;
+		this.vitesse=2;
 	}
 
 	//Méthodes

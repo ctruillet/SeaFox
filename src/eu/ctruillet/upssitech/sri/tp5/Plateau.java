@@ -53,6 +53,14 @@ public class Plateau {
 		}
 	}
 
+	public void removeAllCross(){
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
+				if(this.getCaseAt(i,j).isCross()) this.getCaseAt(i,j).setCross(false);
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Plateau{" +

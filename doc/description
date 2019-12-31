@@ -10,8 +10,7 @@ Chaque équipe est composée de plusieurs bateaux
 
 TIR & DEPLACEMENT :
 	-> Chalutier (3 vies (Chalutier -> Chalutier sans filet -> Radeau de la meduse))
-		-> si sur la case d'un sous-marin : peut attaquer
-		-> 1 filets de peche (esquive 15%)
+		-> Tir ) 1 case
 		-> 3 cases/tour
 		-> Pecher
 	-> Destroyer (1 vie)

@@ -10,6 +10,7 @@ public class SousMarin extends Navire {
 		super(sketch, i, TypeNav.SOUSMARIN, n);
 		this.etat = 1;
 		this.portee=3;
+		this.vitesse=2;
 	}
 
 	//Méthodes

@@ -20,7 +20,7 @@ public class MainClass extends PApplet {
 	protected FSM state;
 	protected int caseX = -1, caseY = -1;
 
-	protected Jeu j;
+	protected static Jeu j;
 	protected ArrayList<Button> Buttons_ChoixNbJoueur = new ArrayList<>();
 	protected ArrayList<Button> Buttons_Actions = new ArrayList<>();
 	protected String message = "";
@@ -173,50 +173,117 @@ public class MainClass extends PApplet {
 
 					case CHALUTIER_ATTAQUE:
 						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).isTirIsOK(caseX,caseY)){
+
 							//Attaque
 							this.j.attaque(caseX,caseY);
+
 							//Action d'attaque indisponible pour ce tour
 							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setPeutAttaquer(false);
+
 							//mise à jour de l'affichage
 							this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(0).setText("Attaquer");
 						}
 						break;
 
 					case CHALUTIER_DEPLACE:
+						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).isDeplacementIsOK(caseX,caseY)){
+
+							//Deplacement
+							this.j.deplacer(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0),caseX, caseY);
+
+							//Action d'attaque indisponible pour ce tour
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setPeutSeDeplacer(false);
+
+							//mise à jour de l'affichage
+							this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(1).setText("Se Deplacer");
+						}
+
 						break;
 
 					case DESTROYER_ATTAQUE:
 						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).isTirIsOK(caseX,caseY)){
+
 							//Attaque
 							this.j.attaque(caseX,caseY);
+
 							//Action d'attaque indisponible pour ce tour
 							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutAttaquer(false);
+
 							//mise à jour de l'affichage
 							this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(3).setText("Attaquer");
 						}
 						break;
 
 					case DESTROYER_DEPLACE:
+						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).isDeplacementIsOK(caseX,caseY)){
+
+							//Deplacement
+							this.j.deplacer(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1),caseX, caseY);
+
+							//Action d'attaque indisponible pour ce tour
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutSeDeplacer(false);
+							//mise à jour de l'affichage
+							this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(4).setText("Se Deplacer");
+						}
 						break;
 
 					case SOUSMARIN_ATTAQUE:
 						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).isTirIsOK(caseX,caseY)){
 							//Attaque
 							this.j.attaque(caseX,caseY);
-							//Action d'attaque indisponible pour ce tour
+
+							//Action d'attaque et deplacement indisponible pour ce tour
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
 							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
+
 							//mise à jour de l'affichage
 							this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(6).setText("Attaquer");
 						}
 						break;
 
 					case SOUSMARIN_DEPLACE:
+						if(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).isDeplacementIsOK(caseX,caseY)){
+
+							//Deplacement
+							this.j.deplacer(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2),caseX, caseY);
+
+							//Action d'attaque et deplacement indisponible pour ce tour
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
+							this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
+
+							//mise à jour de l'affichage
+							this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), false);
+
+							//Attente de la prochaine action
+							this.setActionEnCours(Action.ATTENTE);
+							this.Buttons_Actions.get(7).setText("Se Deplacer");
+						}
 						break;
 
 					default:
 						break;
 				}
-				this.setActionEnCours(Action.ATTENTE);
+
 			}
 		}
 
@@ -246,21 +313,25 @@ public class MainClass extends PApplet {
 
 					switch (i){
 						case 0: //Attaquer - CHALUTIER
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//
+							if(this.getActionEnCours()==Action.ATTENTE && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).isPeutAttaquer()){
 
 								//On change l'action en cours
 								this.setActionEnCours(Action.CHALUTIER_ATTAQUE);
+
 								//MaJ de l'affichage
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), true);
+
 								//Changement de l'affichage du bouton
 								this.Buttons_Actions.get(i).setText("Annuler");
 
 							}else if(this.getActionEnCours()== Action.CHALUTIER_ATTAQUE){
+
 								//On change l'action en cours
 								this.setActionEnCours(Action.ATTENTE);
+
 								//Changement de l'affichage du bouton
 								this.Buttons_Actions.get(i).setText("Attaquer");
+
 								//MaJ de l'affichage
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), false);
 							}
@@ -268,13 +339,20 @@ public class MainClass extends PApplet {
 							break;
 
 						case 1: //Se Deplacer - CHALUTIER
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).setPeutSeDeplacer(false);
+							if(this.getActionEnCours()==Action.ATTENTE  && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0).isPeutSeDeplacer()){
 								this.setActionEnCours(Action.CHALUTIER_DEPLACE);
 								this.Buttons_Actions.get(i).setText("Annuler");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), true);
+
 							}else if(this.getActionEnCours()== Action.CHALUTIER_DEPLACE){
+
 								this.setActionEnCours(Action.ATTENTE);
 								this.Buttons_Actions.get(i).setText("Se Deplacer");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(0), false);
 							}
 							break;
 
@@ -283,13 +361,14 @@ public class MainClass extends PApplet {
 							break;
 
 						case 3:	//Attaquer - DESTROYER
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutAttaquer(false);
+							if(this.getActionEnCours()==Action.ATTENTE  && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).isPeutAttaquer()){
+
 								this.setActionEnCours(Action.DESTROYER_ATTAQUE);
 								this.Buttons_Actions.get(i).setText("Annuler");
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), true);
 
 							}else if(this.getActionEnCours()== Action.DESTROYER_ATTAQUE){
+
 								this.setActionEnCours(Action.ATTENTE);
 								this.Buttons_Actions.get(i).setText("Attaquer");
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), false);
@@ -298,13 +377,21 @@ public class MainClass extends PApplet {
 							break;
 
 						case 4:	//Se Deplacer - DESTROYER
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).setPeutSeDeplacer(false);
+							if(this.getActionEnCours()==Action.ATTENTE  && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1).isPeutSeDeplacer()){
+
 								this.setActionEnCours(Action.DESTROYER_DEPLACE);
 								this.Buttons_Actions.get(i).setText("Annuler");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), true);
+
 							}else if(this.getActionEnCours()== Action.DESTROYER_DEPLACE){
+
 								this.setActionEnCours(Action.ATTENTE);
 								this.Buttons_Actions.get(i).setText("Se Deplacer");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(1), false);
 							}
 							break;
 
@@ -313,14 +400,15 @@ public class MainClass extends PApplet {
 							break;
 
 						case 6: //Attaquer - SOUSMARIN
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
+							if(this.getActionEnCours()==Action.ATTENTE  && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).isPeutAttaquer()){
+
 								this.setActionEnCours(Action.SOUSMARIN_ATTAQUE);
 								this.Buttons_Actions.get(i).setText("Annuler");
+
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), true);
 
 							}else if(this.getActionEnCours()== Action.SOUSMARIN_ATTAQUE){
+
 								this.setActionEnCours(Action.ATTENTE);
 								this.Buttons_Actions.get(i).setText("Attaquer");
 								this.j.majPlateauCasTir(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), false);
@@ -329,14 +417,21 @@ public class MainClass extends PApplet {
 							break;
 
 						case 7: //Se Deplacer - SOUSMARIN
-							if(this.getActionEnCours()==Action.ATTENTE){
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutAttaquer(false);
-								//this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).setPeutSeDeplacer(false);
+							if(this.getActionEnCours()==Action.ATTENTE  && this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2).isPeutSeDeplacer()){
+
 								this.setActionEnCours(Action.SOUSMARIN_DEPLACE);
 								this.Buttons_Actions.get(i).setText("Annuler");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), true);
+
 							}else if(this.getActionEnCours()== Action.SOUSMARIN_DEPLACE){
+
 								this.setActionEnCours(Action.ATTENTE);
 								this.Buttons_Actions.get(i).setText("Se Deplacer");
+
+								//mise à jour de l'affichage
+								this.j.majJeuCasDeplacement(this.j.listeJoueur.get(this.j.getTourJoueur()).getListeNavire().get(2), false);
 							}
 							break;
 
@@ -346,6 +441,9 @@ public class MainClass extends PApplet {
 
 						case 9: //FIN DE TOUR
 							this.setActionEnCours(Action.ATTENTE);
+							this.j.getPlateau().removeAllCross();
+							//TODO : Remettre les boutons à leurs état d'origine
+							if(this.j.isFini()) this.state = FSM.FIN;
 							j.nextTurn();
 							break;
 

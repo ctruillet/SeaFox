@@ -10,6 +10,7 @@ public class Chalutier extends Navire {
 		super(sketch, i, TypeNav.CHALUTIER, n);
 		this.etat = 3;
 		this.portee = 1;
+		this.vitesse = 3;
 	}
 
 	public void afficher(){

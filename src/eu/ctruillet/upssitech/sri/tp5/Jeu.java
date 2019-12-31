@@ -50,8 +50,12 @@ public class Jeu {
 				'}';
 	}
 
-	public void attributionNavire() {
-		//ToDO
+	public boolean isFini() {
+		for(Equipe e : this.listeJoueur){
+			e.majEtat();
+			if(e.getEtat()==0) this.fini = true;
+		}
+		return this.fini;
 	}
 
 	/**
@@ -85,8 +89,12 @@ public class Jeu {
 		//ToDO
 	}
 
+	/**
+	 * Mise à jour de l'affichage du plateau suivant les positions où on peut tirer
+	 * @param n
+	 * @param b
+	 */
 	protected void majPlateauCasTir(Navire n, boolean b) {
-
 		for (int i = 0; i < this.getPlateau().getTaille(); i++) {
 			for (int j = 0; j < this.getPlateau().getTaille(); j++) {
 				if(!n.isTirIsOK(i,j)){
@@ -100,17 +108,24 @@ public class Jeu {
 		this.getPlateau().getCaseAt(x,y).attaque();
 	}
 
-	private void majJeuCasPeche(Commande cmd) {
-		//ToDO
+	public void deplacer(Navire n, int x, int y){
+		this.getPlateau().getCaseAt((int)n.getPosition().getX(),(int)n.getPosition().getY()).removeOccupant(n);
+		this.getPlateau().getCaseAt(x,y).addOccupant((n));
 	}
 
-	private boolean majListeNavire(Navire n) {
-		//ToDO
-		return true;
-	}
+	protected void majJeuCasDeplacement(Navire n, boolean b) {
+			for (int i = 0; i < this.getPlateau().getTaille(); i++) {
+				for (int j = 0; j < this.getPlateau().getTaille(); j++) {
+					if(b){
+						if(this.getPlateau().getCaseAt(i,j).estPleine() || !n.isDeplacementIsOK(i,j)){
+							this.getPlateau().getCaseAt(i,j).setCross(b);
+						}
+					}else{
+						if(this.getPlateau().getCaseAt(i,j).isCross()) this.getPlateau().getCaseAt(i,j).setCross(false);
+					}
 
-	private void majJeuCasDeplacement(Commande cmd) {
-		//ToDO
+				}
+			}
 	}
 
 	public Plateau getPlateau() {

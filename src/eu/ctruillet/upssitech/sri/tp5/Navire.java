@@ -1,6 +1,7 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
+import sun.applet.Main;
 
 import java.awt.*;
 
@@ -12,6 +13,7 @@ public abstract class Navire {
 	protected int numEq;
 	protected int etat; // 0 = Coule
 	protected int portee;
+	protected int vitesse;
 	protected Point position;
 	protected boolean peutAttaquer = true;
 	protected boolean peutSeDeplacer = true;
@@ -82,13 +84,18 @@ public abstract class Navire {
 		return this.etat == 0;
 	}
 
-	public void seDeplacer(int x, int y) {
-		//ToDo
-	}
-
 	public boolean isTirIsOK(int x, int y){
 		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
 		if(d <= this.getPortee()){
+			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isDeplacementIsOK(int x, int y){
+		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
+		if(d <= this.getVitesse() && MainClass.j.getPlateau().getCaseAt(x,y).canIAdd(this.getType())){
 			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
 			return true;
 		}
@@ -103,6 +110,14 @@ public abstract class Navire {
 		this.etat=0;
 	}
 
+	public int getVitesse() {
+		return vitesse;
+	}
+
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+
 	@Override
 	public String toString() {
 		return this.getType() +
@@ -112,6 +127,7 @@ public abstract class Navire {
 				", numEq=" + numEq +
 				", etat=" + etat +
 				", portee=" + portee +
+				", vitesse=" + vitesse +
 				", position=(" + (int)position.getX() + ";" + (int)position.getY() +")" +
 				"}\n\t\t\t\t\t\t\t\t\t\t ";
 	}
