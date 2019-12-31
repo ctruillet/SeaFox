@@ -96,7 +96,7 @@ public class MainClass extends PApplet {
 		fill((new Color(189, 74, 35)).getRGB());
 		textSize(20);
 		this.message = j.getMessage();
-		if(this.state!=FSM.CHOIX_NB_JOUEUR) text(this.message,825,210);
+		if(this.state!=FSM.CHOIX_NB_JOUEUR && this.state!=FSM.FIN ) text(this.message,825,210);
 		fill(0);
 		textSize(14);
 
@@ -138,6 +138,11 @@ public class MainClass extends PApplet {
 				break;
 
 			case FIN:
+				textFont(fontBold);
+				fill((new Color(119, 223, 254)).getRGB());
+				text("Fin du jeu",325,700);
+				fill(0);
+				textFont(fontNormal);
 
 				break;
 

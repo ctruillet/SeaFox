@@ -129,10 +129,12 @@ public class CasePlateau {
 				img = sketch.loadImage("ressources/icons/sousmarin.png");
 			}
 			if (n.getType() == TypeNav.DESTROYER) {
-				img = sketch.loadImage("ressources/icons/destroyer_"+ n.getEtat() + ".png");
+				img = sketch.loadImage("ressources/icons/destroyer.png");
+				sketch.image(sketch.loadImage("ressources/icons/"+n.getEtat()+"_heart.png"), x, y);
 			}
 			if (n.getType() == TypeNav.CHALUTIER) {
-				img = sketch.loadImage("ressources/icons/chalutier_" + n.getEtat() + ".png");
+				img = sketch.loadImage("ressources/icons/chalutier.png");
+				sketch.image(sketch.loadImage("ressources/icons/"+n.getEtat()+"_heart.png"), x, y);
 			}
 
 			//Teinte de couleur suivant l'équipe
