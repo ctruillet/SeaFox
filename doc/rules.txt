@@ -1,6 +1,11 @@
-Regles du jeu:
-
-Jeu au tour par tour de 2 à 4 joueurs (dont une IA).
-Chacun des joueurs possedent 3 bateaux differents (Chalutier, Destroyer, Sous-Marin) ayant une portee de tir, de deplacement et nombre de vie differents
-
-Fin du jeu lorsque il ne reste plus qu'une équipe vivante
+1.	SeaFox est un jeu au tour par tour de 2 à 4 joueurs (dont un joueur doté d’une Intelligence Artificielle)
+2.	Le plateau de jeu se compose de 10x10 cases ayant toutes un comportement unique. Elles ne peuvent accueillir au maximum qu’un navire de surface et un navire de profondeur.
+3.	Chacun des joueurs possède trois bateaux différents (Chalutier, Destroyer et un Sous-Marin) ayant une portée de tir, de déplacement et un nombre de vie différents (affiché en haut à droite de la case occupée par le navire).
+    a.	Le Chalutier est un navire de surface ayant une portée de tir d’une case, de déplacement de trois cases et trois vies.
+    b.	Le Destroyer est un navire de surface ayant une portée de tir de deux cases, de déplacement de deux cases et deux vies.
+    c.	Le Sous-Marin est un navire de profondeur ayant une portée de tir de trois cases, de déplacement de deux cases et une vie.
+4.	Dans un tour, tous les navires de surface peuvent attaquer et se déplacer. Les navires de profondeurs peuvent attaquer ou se déplacer.
+5.	Dans un tour, n’importe quel navire peut se saborder provoquant sa mort instantanément.
+6.	La fin du tour d’un joueur est provoquée par l’appui simple sur le bouton « Fin de Tour ».
+7.	Un navire ne peut attaquer sa propre case. Une attaque sur une case fait des dégâts (d’une vie) à tous les navires présents sur cette case.
+8.	Le jeu se termine lorsqu’il ne reste plus qu’un joueur en vie, il est alors désigné comme vainqueur.
