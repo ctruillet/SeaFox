@@ -290,6 +290,7 @@ public class Jeu {
 		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
 
 		if(this.nbTour>=1){
+			if(isFini()) return ;
 			if(this.listeJoueur.get(this.getTourJoueur()).getMyNature()==Nature.IA){ //Tour de l'IA
 				this.setMessage("Tour de l'IA");
 
