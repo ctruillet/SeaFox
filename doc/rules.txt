@@ -1,0 +1,6 @@
+Regles du jeu:
+
+Jeu au tour par tour de 2 à 4 joueurs (dont une IA).
+Chacun des joueurs possedent 3 bateaux differents (Chalutier, Destroyer, Sous-Marin) ayant une portee de tir, de deplacement et nombre de vie differents
+
+Fin du jeu lorsque il ne reste plus qu'une équipe vivante

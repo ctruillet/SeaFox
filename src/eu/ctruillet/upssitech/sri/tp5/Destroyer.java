@@ -2,6 +2,10 @@ package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
 
+/**
+ * Classe d'un Destroyer
+ * @see Navire
+ */
 public class Destroyer extends Navire {
 	//Attributs
 
@@ -14,7 +18,12 @@ public class Destroyer extends Navire {
 	}
 
 	//Méthodes
-
+	/**
+	 * Affichage du Destroyer dans la case où il se trouve
+	 * Surcharge de la classe Navire
+	 * @see Navire
+	 * @see CasePlateau
+	 */
 	@Override
 	public void afficher() {
 		sketch.tint((this.getNumEq() == 0 ? 255 : (this.getNumEq() == 3 ? 255 : 0)), (this.getNumEq() == 1 ? 255 : (this.getNumEq() == 3 ? 255 : (this.getNumEq() == 2 ? 100 : 0))), (this.getNumEq() == 2 ? 225 : 0));

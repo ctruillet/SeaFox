@@ -6,18 +6,24 @@ import processing.core.PVector;
 
 import java.awt.*;
 
+/** Classe Button
+ * Classe utilisant principalement les méthodes de Processing
+ */
 class Button {
-	protected PApplet sketch;
-	protected PVector[] forme = new PVector[4];
-	protected int x, y; //Coordonnées
-	protected int l; //Largeur
-	protected String text;
-	protected boolean isClicked;
-	protected PShape b;
-	protected Color colorH, colorT;
-	protected int textSize;
+	//Attributs
+	private PApplet sketch;
+	private PVector[] forme = new PVector[4];
+	private int x;
+	private int y; //Coordonnées
+	private int l; //Largeur
+	String text;
+	private boolean isClicked;
+	private PShape b;
+	private Color colorH;
+	private Color colorT;
+	private int textSize;
 
-
+	//Constructeur
 	public Button(PApplet sketch, int x, int y, int l, String texte) {
 		this.sketch = sketch;
 
@@ -31,17 +37,19 @@ class Button {
 		this.colorH.getRGB();
 
 		// Créer la forme
-		//forme[0] = new PVector( (float)(l),0);
 		forme[0] = new PVector((float) (l * Math.cos(Math.PI / 6)), (float) (l * Math.sin(Math.PI / 6)));
 		forme[1] = new PVector((float) (-l * Math.cos(Math.PI / 6)), (float) (l * Math.sin(Math.PI / 6)));
-		//forme[3] = new PVector((float)-l, 0);
 		forme[2] = new PVector((float) (-l * Math.cos(Math.PI / 6)), (float) (-l * Math.sin(Math.PI / 6)));
 		forme[3] = new PVector((float) (l * Math.cos(Math.PI / 6)), (float) (-l * Math.sin(Math.PI / 6)));
-		//forme[6] = new PVector((float)(l*Math.cos(Math.PI/6)), (float)(l*Math.sin(Math.PI/6)));
 
 		this.b = recreateShape(forme);
 	}
 
+	//méthodes
+
+	/**
+	 *
+	 */
 	void update() {
 		b.setFill(this.colorH.getRGB());
 		sketch.shape(this.b, this.x, this.y);
@@ -50,12 +58,6 @@ class Button {
 		sketch.textSize(this.textSize);
 		sketch.text(this.text, this.x, this.y);
 		sketch.fill(0);
-	}
-
-	void update(int x, int y) { // move the form at the current position
-		this.x = x;
-		this.y = y;
-		this.update();
 	}
 
 	@Override
@@ -69,6 +71,12 @@ class Button {
 				'}';
 	}
 
+	/**
+	 * Retourne True si le bouton vient d'être cliqué
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean onClick(int x, int y) {
 		if (containsPoint(forme, x - this.x, y - this.y)) {
 			this.isClicked = true;
@@ -78,6 +86,9 @@ class Button {
 		return false;
 	}
 
+	/**
+	 *
+	 */
 	public void onReleased() {
 		if ((containsPoint(forme, 0, 0)) && (this.isClicked)) {
 			this.isClicked = false;
@@ -85,6 +96,11 @@ class Button {
 		this.b = recreateShape(forme);
 	}
 
+	/**
+	 *
+	 * @param _f
+	 * @return
+	 */
 	private PShape recreateShape(PVector[] _f) {
 		PShape h = sketch.createShape();
 		h.beginShape();
@@ -95,6 +111,13 @@ class Button {
 		return (h);
 	}
 
+	/**
+	 * Retourne True si le point px;py est dans le bouton
+	 * @param verts
+	 * @param px
+	 * @param py
+	 * @return
+	 */
 	private boolean containsPoint(PVector[] verts, float px, float py) {
 		int num = verts.length;
 		int i, j = num - 1;
@@ -112,10 +135,18 @@ class Button {
 		return oddNodes;
 	}
 
+	/**
+	 * Retourne le texte du bouton
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Change le texte du bouton
+	 * @param text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}

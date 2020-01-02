@@ -4,7 +4,10 @@ import processing.core.PApplet;
 
 import java.util.Arrays;
 
-
+/**
+ * Classe du plateau regroupant l'integralité des cases
+ * @see CasePlateau
+ */
 public class Plateau {
 	//Attributs
 	private PApplet sketch;
@@ -26,24 +29,27 @@ public class Plateau {
 	}
 
 	//Méthodes
-	public void affichage() {
-		for (int i = 0; i < this.taille; i++) {
-			for (int j = 0; j < this.taille; j++) {
-				System.out.println(this.matrice[i][j].affichage());
-			}
-			System.out.println("\n");
-		}
-	}
-
 	public int getTaille() {
 		return this.taille;
 	}
 
+	/**
+	 * Renvoit la case de la matrice à la position i;j
+	 * @param i
+	 * @param j
+	 * @return
+	 */
 	public CasePlateau getCaseAt(int i, int j) {
 		return this.matrice[i][j];
 	}
 
-	public void draw(int x, int y) { //ToDO
+	/**
+	 * Méthode loop de processing permettant d'afficher le plateau dans le jeu
+	 * @see PApplet
+	 * @param x
+	 * @param y
+	 */
+	public void draw(int x, int y) {
 		sketch.noFill();
 		for (int i = 0; i < this.taille; i++) {
 			for (int j = 0; j < this.taille; j++) {
@@ -53,6 +59,9 @@ public class Plateau {
 		}
 	}
 
+	/**
+	 * Supprime les croix de toutes les cases barrées
+	 */
 	public void removeAllCross(){
 		for (int i = 0; i < this.taille; i++) {
 			for (int j = 0; j < this.taille; j++) {
@@ -70,6 +79,10 @@ public class Plateau {
 				'}';
 	}
 
+	/**
+	 * Barre les cases qui sont pleines
+	 * @param b
+	 */
 	public void setCrossAtCaseFull(boolean b){
 		for (int i = 0; i < this.taille; i++) {
 			for (int j = 0; j < this.taille; j++) {
@@ -92,28 +105,41 @@ public class Plateau {
 	}
 
 
+	/**
+	 * Renvoit true si x;y sont dans le plateau
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean onClick(int x, int y){
 		return x >= 15 && x <= (15 + this.tailleCase * this.taille) && y >= 15 && y <= (15 + this.tailleCase * this.taille);
 	}
 
+	/**
+	 * Renvoit l'indice i de la case à la position x dans la fenetre
+	 * @param x
+	 * @return
+	 */
 	public int getCaseXOnClick(int x){
 		return (x - 15) / this.getTailleCase();
 	}
 
+	/**
+	 * Renvoit l'indice j de la case à la position y dans la fenetre
+	 * @param y
+	 * @return
+	 */
 	public int getCaseYOnClick(int y){
 		return (y - 15) / this.getTailleCase();
 	}
 
-	public CasePlateau getCaseOnClick(int x,int y){
-		return this.getCaseAt(getCaseXOnClick(x),getCaseYOnClick(y));
-	}
 
+	/**
+	 * Renvoit la taille d'une case
+	 * @return
+	 */
 	public int getTailleCase() {
 		return tailleCase;
-	}
-
-	public CasePlateau[][] getMatrice() {
-		return matrice;
 	}
 
 }

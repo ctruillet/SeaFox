@@ -1,38 +1,28 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
-import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class Equipe implements JHumain, JIA {
-	//Attributs
-	private PApplet sketch;
+/**
+ * Classe d'une Equipe
+ */
+public class Equipe implements Joueur {
 	private Nature myNature;
-	int id;
-	private Commande myCommande;
+	private int id;
 	private ArrayList<Navire> listeNavire = new ArrayList<>();
-	protected int etat;
+	private int etat;
 
 	//Constructeur
-	public Equipe(PApplet sketch, Nature n, int id) {
-		this.sketch = sketch;
+	public Equipe(Nature n, int id) {
+		//Attributs
 		this.myNature = n;
 		this.id = id;
 	}
 
 	//Méthodes
+	@Override
 	public int getEtat() {
 		return etat;
-	}
-
-	@Override
-	public void interrogationParClavier() {
-		//ToDo
-	}
-
-	@Override
-	public void tirageAleatoire() {
-		//ToDo
 	}
 
 	@Override
@@ -45,16 +35,12 @@ public class Equipe implements JHumain, JIA {
 	}
 
 	@Override
-	public Commande getCommande() {
-		return this.myCommande;
-	}
-
-	@Override
 	public void addNavire(Navire nav) {
 		this.listeNavire.add(nav);
 		this.etat+=nav.getEtat();
 	}
 
+	@Override
 	public void majEtat(){
 		this.etat = 0;
 		for(Navire n : this.getListeNavire()){

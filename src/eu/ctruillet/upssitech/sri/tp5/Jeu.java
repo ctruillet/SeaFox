@@ -4,12 +4,16 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Jeu communicant avec MainClass pour l'affichage et les autres classes pour l'execution
+ * @see MainClass
+ */
 public class Jeu {
 	//Attribut
 	private PApplet sketch;
 	private Plateau plateau;
-	protected ArrayList<Equipe> listeJoueur;
-	protected boolean fini = false;
+	ArrayList<Equipe> listeJoueur;
+	private boolean fini = false;
 	private String message;
 	private int tourJoueur;
 	int nbTour;
@@ -27,20 +31,18 @@ public class Jeu {
 	}
 
 	//Méthodes
-	public void jouer() {
-		this.plateau.affichage();
-		//ToDO
-	}
 
+	/**
+	 * Méthode loop de processing permettant d'afficher le plateau de jeu
+	 */
 	public void draw() {
 		this.plateau.draw(15, 15);
 	}
 
-	public void choixJoueurs() {
-
-		//ToDO
-	}
-
+	/**
+	 *
+	 * @return
+	 */
 	public String toString() {
 		return "Jeu{" +
 				"fini=" + fini +
@@ -50,12 +52,40 @@ public class Jeu {
 				'}';
 	}
 
+	/**
+	 * Retoune true si le jeu est fini
+	 * @return
+	 */
 	public boolean isFini() {
+		int nbJoueurAlive = this.getNbJoueur();
 		for(Equipe e : this.listeJoueur){
 			e.majEtat();
-			if(e.getEtat()==0) this.fini = true;
+			if(e.getEtat()==0) nbJoueurAlive--;
 		}
-		return this.fini;
+		System.out.println("Nombre de joueurs en vie : " + nbJoueurAlive);
+		return (nbJoueurAlive<=1);
+	}
+
+	/**
+	 * Retoune la couleur du joueur vainqueur
+	 * @return
+	 */
+	public String getWinner(){
+		String s = "???";
+		for(Equipe e : this.listeJoueur){
+			if(e.getEtat()!=0){
+				if(s.equals("???")){
+					s = (e.getID() == 0 ? "rouge" : (e.getID() == 1 ? "vert" : (e.getID() == 2 ? "bleu" : "jaune")));
+				}else{ //il y a au moins un autre vainqueur
+					try {
+						throw new Exception("Trop de vainqueurs");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+		return s;
 	}
 
 	/**
@@ -63,7 +93,6 @@ public class Jeu {
 	 */
 	public void creationJoueurs() {
 		if (this.nbJoueur != this.listeJoueur.size()) {
-			Equipe e;
 			//Joueurs Humains
 			for (int i = 0; i < this.nbJoueur - 1; i++) {
 				addNewJoueur(Nature.HUMAIN,i);
@@ -79,14 +108,10 @@ public class Jeu {
 	 * @param id
 	 */
 	private void addNewJoueur(Nature n, int id) {
-		Equipe e = new Equipe(this.sketch, n, id);
+		Equipe e = new Equipe(n, id);
 		this.listeJoueur.add(e);
 		System.out.println("Ajout du joueur n°" + id + " (" + n + ")");
 		System.out.println(this.listeJoueur);
-	}
-
-	private void majJeuAvCommande(Commande cmd) {
-		//ToDO
 	}
 
 	/**
@@ -94,7 +119,7 @@ public class Jeu {
 	 * @param n
 	 * @param b
 	 */
-	protected void majPlateauCasTir(Navire n, boolean b) {
+	void majPlateauCasTir(Navire n, boolean b) {
 		for (int i = 0; i < this.getPlateau().getTaille(); i++) {
 			for (int j = 0; j < this.getPlateau().getTaille(); j++) {
 				if(!n.isTirIsOK(i,j)){
@@ -104,21 +129,44 @@ public class Jeu {
 		}
 	}
 
+	/**
+	 * Méthode d'attaque vers la case x;y
+	 * @param x
+	 * @param y
+	 */
 	public void attaque(int x, int y){
 		this.getPlateau().getCaseAt(x,y).attaque();
 	}
 
+	/**
+	 * Deplacement du navire vers la case x;y
+	 * @param n
+	 * @param x
+	 * @param y
+	 */
 	public void deplacer(Navire n, int x, int y){
+		if(x<0 || x>9 || y<0 || y>9){
+			try {
+				throw new LimiteException(x,y);
+			} catch (LimiteException e) {
+				e.printStackTrace();
+			}
+		}
 		this.getPlateau().getCaseAt((int)n.getPosition().getX(),(int)n.getPosition().getY()).removeOccupant(n);
 		this.getPlateau().getCaseAt(x,y).addOccupant((n));
 	}
 
-	protected void majJeuCasDeplacement(Navire n, boolean b) {
+	/**
+	 * Affichage de croix sur la cases où le navire ne peut pas se deplacer
+	 * @param n
+	 * @param b
+	 */
+	void majJeuCasDeplacement(Navire n, boolean b) {
 			for (int i = 0; i < this.getPlateau().getTaille(); i++) {
 				for (int j = 0; j < this.getPlateau().getTaille(); j++) {
 					if(b){
 						if(this.getPlateau().getCaseAt(i,j).estPleine() || !n.isDeplacementIsOK(i,j)){
-							this.getPlateau().getCaseAt(i,j).setCross(b);
+							this.getPlateau().getCaseAt(i,j).setCross(true);
 						}
 					}else{
 						if(this.getPlateau().getCaseAt(i,j).isCross()) this.getPlateau().getCaseAt(i,j).setCross(false);
@@ -128,10 +176,19 @@ public class Jeu {
 			}
 	}
 
+
 	public Plateau getPlateau() {
 		return this.plateau;
 	}
 
+	/**
+	 * Retoune true et ajoute un bateau à la case caseX;caseY
+	 * Retoune false sinon
+	 * @param n
+	 * @param caseX
+	 * @param caseY
+	 * @return
+	 */
 	private boolean addNewBateauAt(Navire n, int caseX, int caseY) {
 		if (this.plateau.getCaseAt(caseX, caseY).canIAdd(n.getType())) {
 			this.listeJoueur.get(n.getNumEq()).addNavire(n);
@@ -217,7 +274,10 @@ public class Jeu {
 		}
 	}
 
-	protected void nextTurn() {
+	/**
+	 * Passe au tour suivant
+	 */
+	void nextTurn() {
 		for(Navire n : this.listeJoueur.get(this.getTourJoueur()).getListeNavire()){
 			n.update();
 		}
@@ -229,17 +289,25 @@ public class Jeu {
 		}
 		this.tourJoueur = (this.tourJoueur + 1) % this.nbJoueur;
 
-		if( this.nbTour >= 1 && this.listeJoueur.get(this.getTourJoueur()).getMyNature()==Nature.IA){ //Tour de l'IA
-			this.setMessage("Tour de l'IA");
+		if(this.nbTour>=1){
+			if(this.listeJoueur.get(this.getTourJoueur()).getMyNature()==Nature.IA){ //Tour de l'IA
+				this.setMessage("Tour de l'IA");
 
-			//on joue
-			this.jouerIA();
+				//on joue
+				this.jouerIA();
 
-			//Tour suivant
-			this.nextTurn();
-		}else{
-			this.setMessage("Joueur "+ (this.tourJoueur == 0 ? "rouge" : (this.tourJoueur == 1 ? "vert" : (this.tourJoueur == 2 ? "bleu" : "jaune"))) +", c'est à vous !");
+				//Tour suivant
+				this.nextTurn();
+
+			}else{
+				if(this.listeJoueur.get(this.getTourJoueur()).getEtat()==0){
+					this.nextTurn();
+				}
+
+				this.setMessage("Joueur "+ (this.tourJoueur == 0 ? "rouge" : (this.tourJoueur == 1 ? "vert" : (this.tourJoueur == 2 ? "bleu" : "jaune"))) +", c'est à vous !");
+			}
 		}
+
 	}
 
 	public int getTourJoueur() {
@@ -258,10 +326,13 @@ public class Jeu {
 		return this.message;
 	}
 
-	public void setMessage(String message) {
+	private void setMessage(String message) {
 		this.message = message;
 	}
 
+	/**
+	 * Fait jouer l'IA
+	 */
 	private void jouerIA(){
 		double random;
 		int x=-1, y=-1;
@@ -288,6 +359,10 @@ public class Jeu {
 		}
 	}
 
+	/**
+	 * Fait attaquer le navire n de l'IA sur une case possible au hasard
+	 * @param n
+	 */
 	private void attaqueIA(Navire n){
 		double random;
 		for(int i=0; i<this.getPlateau().getTaille(); i++){
@@ -305,9 +380,12 @@ public class Jeu {
 		}
 	}
 
+	/**
+	 * Fait se deplacer le navire n de l'IA sur une case possible au hasard
+	 * @param n
+	 */
 	private void deplacementIA(Navire n){
-		double random;
-		int x=-1, y=-1;
+		int x, y;
 
 		for(int i=0; i<10; i++){
 			x = (int)(Math.random()*9);

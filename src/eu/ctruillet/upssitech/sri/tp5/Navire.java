@@ -1,10 +1,12 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
 import processing.core.PApplet;
-import sun.applet.Main;
 
 import java.awt.*;
 
+/**
+ * Classe abstraite Navire
+ */
 public abstract class Navire {
 	//Attributs
 	protected PApplet sketch;
@@ -44,10 +46,6 @@ public abstract class Navire {
 		this.peutSeDeplacer = peutSeDeplacer;
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	public int getNumEq() {
 		return numEq;
 	}
@@ -72,10 +70,6 @@ public abstract class Navire {
 		this.etat=(this.etat-1<0 ? 0 : this.etat-1);
 	}
 
-	public void setEtat(int etat) {
-		this.etat = etat;
-	}
-
 	public boolean estValide() {
 		return this.etat != 0;
 	}
@@ -84,23 +78,29 @@ public abstract class Navire {
 		return this.etat == 0;
 	}
 
+	/**
+	 * Retoune true si le navire peut attaquer sur la case x;y
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean isTirIsOK(int x, int y){
 		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
-		if(d <= this.getPortee()){
-			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
-			return true;
-		}
-		return false;
+		//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
+		return d <= this.getPortee() && !(x == (int) this.getPosition().getX() && y == (int) this.getPosition().getY());
 	}
 
+	/**
+	 * Retoune true si la navire peut se deplacer sur la case x;y
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean isDeplacementIsOK(int x, int y){
 		if(x<0 || x>9 || y<0 || y>9) return false;
 		int d = (int)Math.sqrt(Math.pow(this.position.getX() - x,2) + Math.pow(this.position.getY() - y,2));
-		if(d <= this.getVitesse() && MainClass.j.getPlateau().getCaseAt(x,y).canIAdd(this.getType())){
-			//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
-			return true;
-		}
-		return false;
+		//System.out.println("Distance = " + d + "\tPortee = " + this.getPortee());
+		return d <= this.getVitesse() && MainClass.j.getPlateau().getCaseAt(x, y).canIAdd(this.getType());
 	}
 
 	public int getPortee() {
@@ -113,10 +113,6 @@ public abstract class Navire {
 
 	public int getVitesse() {
 		return vitesse;
-	}
-
-	public void setVitesse(int vitesse) {
-		this.vitesse = vitesse;
 	}
 
 	@Override
@@ -133,6 +129,12 @@ public abstract class Navire {
 				"}\n\t\t\t\t\t\t\t\t\t\t ";
 	}
 
+	/**
+	 * Méthode abstraite d'affichage
+	 * @see Chalutier
+	 * @see Destroyer
+	 * @see SousMarin
+	 */
 	public abstract void afficher();
 
 	public void update(){

@@ -5,7 +5,11 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 
+/**
+ * Classe d'une case du plateau
+ */
 public class CasePlateau {
+
 	//Attributs
 	private ArrayList<Navire> occupants = new ArrayList<>();
 	private int tailleCase;
@@ -21,31 +25,57 @@ public class CasePlateau {
 		this.x=x;
 		this.y=y;
 		this.isCross = false;
-		//ToDo
 	}
 
 	//Méthodes
+
+	/**
+	 * Retoune les occupants de la case
+	 * @return
+	 */
 	private ArrayList<Navire> getOccupants() {
 		return this.occupants;
 	}
 
+	/**
+	 * Ajoute un occupant à la case
+	 * @param occupant
+	 */
 	public void addOccupant(Navire occupant) {
 		if(canIAdd(occupant.getType())){
+			if(this.estPleine()){
+				try {
+					throw new OccupationException(this.x, this.y);
+				} catch (OccupationException e) {
+					e.printStackTrace();
+				}
+			}
 			this.occupants.add(occupant);
 			occupant.setPosition(x,y);
 		}
 	}
 
+	/**
+	 *
+	 */
 	public void attaque(){
 		for(Navire n : this.getOccupants()){
 			n.setDegat();
 		}
 	}
 
+	/**
+	 * Retourne true si la case est occupee par au moins 1 navire
+	 * @return
+	 */
 	public boolean estOccupee() {
 		return !this.occupants.isEmpty();
 	}
 
+	/**
+	 * Retoune true si la case est vide
+	 * @return
+	 */
 	public boolean estVide() {
 		return this.occupants.isEmpty();
 	}
@@ -62,6 +92,11 @@ public class CasePlateau {
 				'}';
 	}
 
+	/**
+	 * Retoune vrai si on peut ajouter un bateau de type 'type' sur la case
+	 * @param type
+	 * @return
+	 */
 	public boolean canIAdd(TypeNav type){
 		for(Navire n: this.occupants){
 			if(n.getType() == TypeNav.SOUSMARIN){
@@ -73,34 +108,34 @@ public class CasePlateau {
 		return true;
 	}
 
+	/**
+	 * Retoune true si la case est pleine
+	 * @return
+	 */
 	public boolean estPleine() {
 		return this.occupants.size() == 2;
 	}
 
-	public String affichage() {
-		StringBuilder s = new StringBuilder("[");
-		for (Navire e : this.occupants) {
-			s.append(e.toString()).append(";");
-		}
-		return s + "]";
-	}
-
+	/**
+	 * Enleve un occupant de la case
+	 * @param n
+	 */
 	public void removeOccupant(Navire n) {
 		this.occupants.remove(n);
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
+	/**
+	 * Retourne true si la case est barrée
+	 * @return
+	 */
 	public boolean isCross() {
 		return isCross;
 	}
 
+	/**
+	 * barre la case si cross=true
+	 * @param cross
+	 */
 	public void setCross(boolean cross) {
 		isCross = cross;
 	}
@@ -108,7 +143,7 @@ public class CasePlateau {
 	/**
 	 * Update des occupants de la case
 	 */
-	public void update(){
+	private void update(){
 		for(int i=0; i<this.getOccupants().size(); i++){
 			if(this.getOccupants().get(i).position.getX() != this.x && this.getOccupants().get(i).position.getY() != this.y){
 				this.removeOccupant(this.getOccupants().get(i));
@@ -119,6 +154,12 @@ public class CasePlateau {
 		}
 	}
 
+	/**
+	 * Méthode loop de processing permettant de dessiner la case sur la fenetre
+	 * @see MainClass
+	 * @param x
+	 * @param y
+	 */
 	public void draw(int x, int y) {
 		this.update();
 		sketch.stroke(181, 128, 87);

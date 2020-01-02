@@ -1,5 +1,8 @@
 package eu.ctruillet.upssitech.sri.tp5;
 
+/**
+ * Actions possible durant un tour
+ */
 public enum Action {
 	ATTENTE,
 
